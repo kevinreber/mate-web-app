@@ -59,6 +59,7 @@ a.nav-link:focus {
 
 .nav-avatar .MuiAvatar-root.MuiAvatar-circle {
 	margin: auto;
+	border: 1px solid var(--primary-color);
 }
 
 /********************************* */
@@ -232,5 +233,17 @@ a.nav-link:focus {
 	.NavBar-List.NavBar-List__Secondary.NavBar-List__Settings {
 		margin-top: auto;
 		margin-bottom: 2rem;
+	}
+}
+
+/* Extra large devices (large desktops, 1200px and up) */
+@media (min-width: 1200px) {
+	.NavBar {
+		width: 30rem;
+	}
+
+	.NavBar > .NavBar-List {
+		margin-left: 10rem;
+		width: auto;
 	}
 }
