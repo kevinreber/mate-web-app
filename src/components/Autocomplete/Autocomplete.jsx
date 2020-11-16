@@ -35,7 +35,8 @@ function Autocomplete({
 			}
 		});
 
-		setFilteredOptions(opts);
+		const firstTenMatches = opts.slice(0, 10);
+		setFilteredOptions(firstTenMatches);
 	}
 
 	function onClick(e) {
