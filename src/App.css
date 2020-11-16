@@ -482,7 +482,7 @@ span.MuiButtonBase-root.MuiIconButton-root.PrivateSwitchBase-root-9.MuiCheckbox-
 	/* Admin Buttons for Message Chat and Study Group Chat */
 	.MessageChat__Header > button.MuiButtonBase-root.MuiIconButton-root,
 	.StudyGroupChat__Header > button.MuiButtonBase-root.MuiIconButton-root {
-		right: 18%;
+		right: 7rem;
 	}
 
 	.mate-btn-cta {
@@ -555,11 +555,6 @@ span.MuiButtonBase-root.MuiIconButton-root.PrivateSwitchBase-root-9.MuiCheckbox-
 	.StudyGroupChat__Footer,
 	.MessageChat__Footer {
 		width: 70%;
-	}
-
-	.Modal .mate-btn-primary,
-	.Modal .mate-btn-secondary {
-		margin-left: -25px;
 	}
 }
 
