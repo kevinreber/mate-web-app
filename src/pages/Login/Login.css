@@ -1,54 +1,77 @@
 .Login__container {
-    padding: 1rem;
-    height: 100vh;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-evenly;
+	padding: 1rem;
+	height: 100vh;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-evenly;
 }
 
-.Login__container>.Login__form>.Login__buttons>button {
-    text-transform: inherit !important;
-    color: var(--bg-color);
-    background-color: var(--primary-color);
-    border: 1px solid var(--primary-color);
-    width: 100%;
-    border-radius: 15px;
-    height: 45px;
-    font-size: 20px;
-    margin-bottom: 1rem;
+.Login__container > .Login__form > .Login__buttons > button {
+	text-transform: inherit !important;
+	color: var(--bg-color);
+	background-color: var(--primary-color);
+	border: 1px solid var(--primary-color);
+	width: 100%;
+	border-radius: 15px;
+	height: 45px;
+	font-size: 20px;
+	margin-bottom: 1rem;
 }
 
-.Login__container>.Login__form>.Login__buttons>button:hover {
-    color: var(--bg-color);
-    background-color: var(--primary-color) !important;
+.Login__container > .Login__form > .Login__buttons > button:hover {
+	color: var(--bg-color);
+	background-color: var(--primary-color) !important;
 }
 
-.Login__container>.Login__form>.Login__buttons {
-    display: flex;
-    flex-direction: column;
-    width: 100%;
+.Login__container > .Login__form > .Login__buttons {
+	display: flex;
+	flex-direction: column;
+	width: 100%;
 }
 
-.Login__buttons>p {
-    font-size: 14px;
-    font-style: italic;
+.Login__buttons > p {
+	font-size: 14px;
+	font-style: italic;
 }
 
 #Login__btn {
-    color: var(--bg-color);
-    background-color: var(--primary-color) !important;
-    /* border: 1px solid var(--primary-color); */
+	color: var(--bg-color);
+	background-color: var(--primary-color) !important;
+	/* border: 1px solid var(--primary-color); */
 }
 
-.Mate-Logo>img {
-    margin-top: 3rem;
-    width: 96px;
+.Mate-Logo > img {
+	margin-top: 3rem;
+	width: 96px;
 }
 
-/* #Login-Google__btn {
-    height: 45px;
-    border-radius: 15px;
-    color: var(--bg-color);
-    background-color: var(--primary-color);
+#Login-Google__btn {
+	margin-right: auto;
+	margin-left: auto;
+	max-width: 350px;
+}
 
-} */
+.fade-in-logo {
+	animation: fadeInLogin ease 1.8s;
+	-webkit-animation: fadeInLogin ease 1.8s;
+	-moz-animation: fadeInLogin ease 1.8s;
+	-o-animation: fadeInLogin ease 1.8s;
+	-ms-animation: fadeInLogin ease 1.8s;
+}
+
+.fade-in-delay {
+	animation: fadeInLogin ease 2.5s;
+	-webkit-animation: fadeInLogin ease 2.5s;
+	-moz-animation: fadeInLogin ease 2.5s;
+	-o-animation: fadeInLogin ease 2.5s;
+	-ms-animation: fadeInLogin ease 2.5s;
+}
+
+@keyframes fadeInLogin {
+	0% {
+		opacity: 0;
+	}
+	100% {
+		opacity: 1;
+	}
+}
