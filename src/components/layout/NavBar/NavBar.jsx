@@ -4,11 +4,11 @@ import { Link, NavLink } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 
 /** Components & Helpers */
-import { ReactComponent as CoursesIcon } from './icons/courses-icon.svg';
-import Logo from '../../images/logo/mate-logo.png';
-import StudyGroupIcon from './icons/study-group-icon.png';
-import { ReactComponent as TutorIcon } from './icons/tutor-icon.svg';
-import { logOut } from '../../store/actions/auth';
+import { ReactComponent as CoursesIcon } from '../icons/courses-icon.svg';
+import Logo from '../../../images/logo/mate-logo.png';
+import StudyGroupIcon from '../icons/study-group-icon.png';
+import { ReactComponent as TutorIcon } from '../icons/tutor-icon.svg';
+import { logOut } from '../../../store/actions/auth';
 
 /** MUI */
 import { IconButton, Avatar } from '@material-ui/core';
@@ -18,7 +18,7 @@ import { Badge } from '@material-ui/core';
 import NotificationsNoneOutlinedIcon from '@material-ui/icons/NotificationsNoneOutlined';
 import ExitToAppOutlinedIcon from '@material-ui/icons/ExitToAppOutlined';
 
-import './styles/NavBar.css';
+import './NavBar.css';
 
 function NavBar() {
 	const dispatch = useDispatch();
