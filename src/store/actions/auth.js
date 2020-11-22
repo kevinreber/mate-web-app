@@ -135,9 +135,9 @@ export function googleLogin() {
 				.setPersistence(firebase.auth.Auth.Persistence.SESSION)
 				.then(() => {
 					auth.signInWithPopup(provider).then(async (result) => {
+						console.log(result.credential.idToken);
 						// Check if user exists - account will be made for new users.
 						await checkIfUserExists(result.user);
-
 						db.collection('users')
 							.doc(result.user.uid)
 							.get()

@@ -4,7 +4,7 @@ import moment from 'moment';
 import { PropTypes } from 'prop-types';
 
 /** Helpers */
-import capitalizeFirstLetter from '../../../utils/capitalizeFirstLetter';
+import capitalizeFirstLetter from '../../../../utils/capitalizeFirstLetter';
 
 /** MUI */
 import Chip from '@material-ui/core/Chip';
