@@ -469,6 +469,12 @@ li .MuiChip-root svg:hover {
 		height: 16vh;
 	}
 
+	.PostInfo__Header.Body-Header,
+	.Courses-Header,
+	.Tutors-Header {
+		max-height: 4rem;
+	}
+
 	.Notifications__Header,
 	.Courses-Header,
 	.Tutors-Header {
@@ -510,9 +516,12 @@ li .MuiChip-root svg:hover {
 	}
 
 	.StudyGroupChat__Body.Page__Body,
-	.CourseInfo__Body,
-	.Tutors__Body {
+	.CourseInfo__Body {
 		margin-top: 4rem;
+	}
+
+	.Tutors__Body {
+		margin-top: 5rem;
 	}
 
 	.Courses__CourseList,
@@ -666,6 +675,12 @@ li .MuiChip-root svg:hover {
 
 	.MessageChat__Header {
 		margin-top: 0.2rem;
+	}
+
+	.Feed-Header,
+	.MessageChat__Header,
+	.Notifications__Header {
+		max-height: 4rem;
 	}
 
 	.MessageChat__Body {
