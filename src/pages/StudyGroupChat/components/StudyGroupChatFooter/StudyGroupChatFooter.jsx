@@ -4,9 +4,9 @@ import { useDispatch } from 'react-redux';
 import { PropTypes } from 'prop-types';
 
 /** Components & Helpers */
-import useFields from '../../../hooks/useFields';
-import createFbTimestamp from '../../../utils/createFbTimestamp';
-import { addFlashMessage } from '../../../store/actions/flashMessages';
+import useFields from '../../../../hooks/useFields';
+import createFbTimestamp from '../../../../utils/createFbTimestamp';
+import { addFlashMessage } from '../../../../store/actions/flashMessages';
 
 /** MUI */
 import IconButton from '@material-ui/core/IconButton';
