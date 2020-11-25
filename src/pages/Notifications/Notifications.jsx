@@ -33,7 +33,6 @@ function Notifications() {
 	const [messages, setMessages] = useState([]);
 
 	useEffect(() => {
-		console.log('fetching...');
 		db.collection('messages')
 			.where('users', 'array-contains', currentUser.uid)
 			// .orderBy('lastUpdatedAt')
