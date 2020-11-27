@@ -1,6 +1,6 @@
 import React from 'react';
-import NotificationCard from './NotificationCard';
-import NoData from '../../../components/NoData/NoData';
+import NotificationCard from '../NotificationCard/NotificationCard';
+import NoData from '../../../../components/NoData/NoData';
 
 function NotificationsList({ notifications }) {
 	const List = notifications ? (

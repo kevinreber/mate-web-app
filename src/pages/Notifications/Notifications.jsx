@@ -4,9 +4,9 @@ import { useHistory } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 
 /** Components & Helpers */
-import NotificationsList from './components/NotificationsList';
-import MessagesList from './components/MessagesList';
-import NewMessageForm from './components/NewMessageForm';
+import NotificationsList from './components/NotificationsList/NotificationsList';
+import MessagesList from './components/MessagesList/MessagesList';
+import NewMessageForm from './components/NewMessageForm/NewMessageForm';
 import Modal from '../../components/Modal/Modal';
 import db from '../../config/fbConfig';
 import './Notifications.css';
