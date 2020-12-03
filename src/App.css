@@ -516,12 +516,13 @@ li .MuiChip-root svg:hover {
 	}
 
 	.StudyGroupChat__Body.Page__Body,
-	.CourseInfo__Body {
+	.CourseInfo__Body,
+	.Tutors__Body {
 		margin-top: 4rem;
 	}
 
-	.Tutors__Body {
-		margin-top: 5rem;
+	.Find-Tutors__Form {
+		margin-top: 1rem;
 	}
 
 	.Courses__CourseList,
@@ -665,12 +666,19 @@ li .MuiChip-root svg:hover {
 	.Search-Header,
 	.MessageCard,
 	.StudyGroups__Card,
-	.Post-Card,
+	.PostInfo .Post-Card,
 	.Course-Card,
 	.Assignment-Card,
 	.Comment-Card,
-	.Tutor-Card {
+	.Tutor-Card,
+	.StudyGroupChat,
+	.MessageChat {
 		border-right: 1px solid var(--tertiary-color);
+	}
+
+	.MessageChat,
+	.StudyGroupChat {
+		height: 100vh;
 	}
 
 	.MessageChat__Header {
