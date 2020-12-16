@@ -14,7 +14,7 @@ import { fetchCourseCatalog } from '../../store/actions/courseCatalog';
 import { addFlashMessage } from '../../store/actions/flashMessages';
 import db from '../../config/fbConfig';
 import './Courses.css';
-import { CONFIRM_DIALOG_INITIAL_STATE } from './constants/index';
+import { CONFIRM_DIALOG_INITIAL_STATE, FB, MESSAGE } from './constants/index';
 
 /** Displays a CourseList of user's Current and Past Semester courses. 
     Courses will fetch which courses to display from API and pass courses into CourseList.
@@ -79,16 +79,16 @@ function Courses() {
 		dispatch(
 			addFlashMessage({
 				isOpen: true,
-				message: 'Course Added',
-				type: 'success',
+				message: MESSAGE.addCourse,
+				type: MESSAGE.success,
 			})
 		);
 	};
 
 	useEffect(() => {
 		const getData = () => {
-			db.collection('class')
-				.where('users', 'array-contains', currentUser.uid)
+			db.collection(FB.collection)
+				.where(FB.field, FB.filter, currentUser.uid)
 				.onSnapshot((snapshot) =>
 					setCourses(
 						snapshot.docs.map((doc) => ({
