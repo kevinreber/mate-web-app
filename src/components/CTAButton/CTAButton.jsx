@@ -10,6 +10,7 @@ function CTAButton({ text, danger = false }) {
 	return (
 		<div className="container w-75">
 			<button
+				aria-label={text}
 				className={`btn mate-btn  mate-btn-cta ${
 					danger ? 'mate-btn-danger' : 'mate-btn-secondary'
 				}`}>

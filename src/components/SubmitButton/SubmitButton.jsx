@@ -11,13 +11,16 @@ function SubmitButton({
 }) {
 	return (
 		<div className="container w-75">
-			<button className="btn mate-btn mate-btn-primary mate-btn-submit">
+			<button
+				aria-label={text}
+				className="btn mate-btn mate-btn-primary mate-btn-submit">
 				{text}
 			</button>
 			{reset ? (
 				<>
 					<button
 						type="button"
+						aria-label={resetText}
 						onClick={resetForm}
 						className={`btn mate-btn mate-btn-reset 
 						${danger ? 'mate-btn-danger' : 'mate-btn-secondary'}`}>
