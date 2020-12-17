@@ -12,6 +12,21 @@ export const COURSE_FORM_DATA_INITIAL_STATE = {
 	courseId: null,
 };
 
+// Form Data
+export const COMMUNITY_FORM_DATA_INITIAL_STATE = {
+	name: '',
+	semester: '',
+	year: '',
+	id: null,
+};
+
+//  Constant Variables
+export const COMMUNITIES = 'communities';
+export const COURSES = 'courses';
+export const CURRENT = 'current';
+export const PAST = 'past';
+export const CURRENT_SEMESTER = 'fall 2020';
+
 /** Firebase Collection constants  */
 export const FB = {
 	collection: 'class',
