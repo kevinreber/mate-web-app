@@ -14,7 +14,7 @@ export const COURSE_FORM_DATA_INITIAL_STATE = {
 
 /** Firebase Collection constants  */
 export const FB = {
-	collection: 'courses',
+	collection: 'class',
 	field: 'users',
 	filter: 'array-contains',
 };
