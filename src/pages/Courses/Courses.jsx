@@ -5,6 +5,7 @@ import { useSelector, useDispatch } from 'react-redux';
 /** Components & Helpers */
 import CourseList from './components/CourseList/CourseList';
 import CourseForm from './components/CourseForm/CourseForm';
+import CommunityForm from './components/CommunityForm/CommunityForm';
 import Modal from '../../components/Modal/Modal';
 import Loader from '../../components/layout/Loader/Loader';
 import CTAButton from '../../components/CTAButton/CTAButton';
@@ -13,7 +14,16 @@ import { fetchCourseCatalog } from '../../store/actions/courseCatalog';
 import { addFlashMessage } from '../../store/actions/flashMessages';
 import db from '../../config/fbConfig';
 import './Courses.css';
-import { CONFIRM_DIALOG_INITIAL_STATE, FB, MESSAGE } from './constants/index';
+import {
+	CONFIRM_DIALOG_INITIAL_STATE,
+	FB,
+	MESSAGE,
+	COMMUNITIES,
+	COURSES,
+	CURRENT,
+	PAST,
+	CURRENT_SEMESTER,
+} from './constants/index';
 
 /** Displays a CourseList of user's Current and Past Semester courses. 
     Courses will fetch which courses to display from API and pass courses into CourseList.
@@ -37,7 +47,7 @@ function Courses() {
 	const currentCourses =
 		!isLoading && courses
 			? courses.filter(
-					(course) => course.data.semester.toLowerCase() === 'fall 2020'
+					(course) => course.data.semester.toLowerCase() === CURRENT_SEMESTER
 			  )
 			: [];
 
@@ -45,12 +55,12 @@ function Courses() {
 	const pastCourses =
 		!isLoading && courses
 			? courses.filter(
-					(course) => course.data.semester.toLowerCase() !== 'fall 2020'
+					(course) => course.data.semester.toLowerCase() !== CURRENT_SEMESTER
 			  )
 			: [];
 
 	// State will determine what courses to show in CourseList
-	const [active, setActive] = useState('current');
+	const [active, setActive] = useState(COMMUNITIES);
 	const toggleCourses = (e) => {
 		setActive(e.target.id);
 	};
@@ -121,8 +131,8 @@ function Courses() {
 		<Loader />
 	) : (
 		<>
-			<CourseList courses={currentCourses} type={'current'} />
-			<CourseList courses={pastCourses} type={'past'} />
+			<CourseList courses={currentCourses} type={CURRENT} />
+			<CourseList courses={pastCourses} type={PAST} />
 		</>
 	);
 
@@ -131,8 +141,8 @@ function Courses() {
 			<Modal
 				isOpen={showForm}
 				content={
-					active === 'current' ? (
-						<CourseForm
+					active === COMMUNITIES ? (
+						<CommunityForm
 							save={addCoursePrompt}
 							confirmDialog={confirmDialog}
 							setConfirmDialog={setConfirmDialog}
@@ -155,24 +165,24 @@ function Courses() {
 	return (
 		<div className="Courses">
 			<div className="Courses-Header Body-Header">
-				<div className="Courses-Current">
+				<div className="Communities">
 					<h5
-						id="current"
+						id="communities"
 						className={
-							active === 'current' ? 'mate-text-primary' : 'mate-text-active'
+							active === COMMUNITIES ? 'mate-text-primary' : 'mate-text-active'
 						}
 						onClick={toggleCourses}>
-						Current Semester
+						Communities
 					</h5>
 				</div>
-				<div className="Courses-Past">
+				<div className="Courses">
 					<h5
-						id="past"
+						id="courses"
 						className={
-							active === 'past' ? 'mate-text-primary' : 'mate-text-active'
+							active === COURSES ? 'mate-text-primary' : 'mate-text-active'
 						}
 						onClick={toggleCourses}>
-						Past Semester
+						Courses
 					</h5>
 				</div>
 			</div>
