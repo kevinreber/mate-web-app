@@ -4,6 +4,10 @@
 	text-align: left;
 }
 
+.Course-List {
+	margin-bottom: 0;
+}
+
 .Courses__CourseList {
 	flex: 1;
 	margin-top: 18vh;
@@ -35,6 +39,15 @@
 .Course.Course-Card .Course-Name {
 	width: 150px;
 	padding-left: 1.25rem;
+	margin-bottom: 0;
+}
+
+/* Course Semester */
+.Course.Course-Card .Course-Name.Course-Semester {
+	font-size: 1rem;
+	width: 100%;
+	padding-bottom: 1rem;
+	margin-bottom: 0;
 }
 
 .Course.Course-Card .Course-Title {
