@@ -6,7 +6,11 @@ import { useSelector } from 'react-redux';
 import ConfirmDialog from '../../../../components/ConfirmDialog/ConfirmDialog';
 import SubmitButton from '../../../../components/SubmitButton/SubmitButton';
 import Autocomplete from '../../../../components/Autocomplete/Autocomplete';
-import { COURSE_FORM_DATA_INITIAL_STATE } from '../../constants/index';
+import {
+	COURSE_FORM_DATA_INITIAL_STATE,
+	SEMESTERS,
+	YEARS,
+} from '../../constants/index';
 
 /** Form to add a course.
  * Courses -> 'Join Class' Button -> Modal -> CourseForm
@@ -103,9 +107,9 @@ function CourseForm({ save, confirmDialog, setConfirmDialog, courses }) {
 						<option className="option-disabled" value="" disabled>
 							Semester
 						</option>
-						<option>Fall</option>
-						<option>Spring</option>
-						<option>Summer</option>
+						{SEMESTERS.map((semester) => (
+							<option>{semester}</option>
+						))}
 					</select>
 					<select
 						id="courseYear"
@@ -116,11 +120,9 @@ function CourseForm({ save, confirmDialog, setConfirmDialog, courses }) {
 						<option className="option-disabled" value="" disabled>
 							Year
 						</option>
-						<option>2020</option>
-						<option>2019</option>
-						<option>2018</option>
-						<option>2017</option>
-						<option>2016</option>
+						{YEARS.map((year) => (
+							<option>{year}</option>
+						))}
 					</select>
 				</div>
 				<div className="alert errors">{errors}</div>
