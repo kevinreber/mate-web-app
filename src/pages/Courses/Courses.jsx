@@ -7,7 +7,6 @@ import CourseList from './components/CourseList/CourseList';
 import CourseForm from './components/CourseForm/CourseForm';
 import Modal from '../../components/Modal/Modal';
 import Loader from '../../components/layout/Loader/Loader';
-import NoData from '../../components/NoData/NoData';
 import CTAButton from '../../components/CTAButton/CTAButton';
 import { addCourseToFB } from '../../store/actions/courses';
 import { fetchCourseCatalog } from '../../store/actions/courseCatalog';
@@ -27,7 +26,7 @@ function Courses() {
 	const courseCatalog = useSelector((state) => state.courseCatalog);
 	const [loadCatalog, setLoadCatalog] = useState(true);
 
-	const [courses, setCourses] = useState(null);
+	const [courses, setCourses] = useState([]);
 	const [isLoading, setIsLoading] = useState(true);
 
 	const [confirmDialog, setConfirmDialog] = useState(
@@ -40,7 +39,7 @@ function Courses() {
 			? courses.filter(
 					(course) => course.data.semester.toLowerCase() === 'fall 2020'
 			  )
-			: null;
+			: [];
 
 	/** Past Semester Courses */
 	const pastCourses =
@@ -48,7 +47,7 @@ function Courses() {
 			? courses.filter(
 					(course) => course.data.semester.toLowerCase() !== 'fall 2020'
 			  )
-			: null;
+			: [];
 
 	// State will determine what courses to show in CourseList
 	const [active, setActive] = useState('current');
@@ -108,7 +107,8 @@ function Courses() {
 	useEffect(() => {
 		/** get course catalog on page load */
 		async function getCourseCatalog() {
-			await dispatch(fetchCourseCatalog());
+			// ! TEMPORARY
+			// await dispatch(fetchCourseCatalog());
 			setLoadCatalog(false);
 		}
 		if (!courseCatalog.courses && loadCatalog) {
@@ -117,34 +117,35 @@ function Courses() {
 	}, [dispatch, courseCatalog, loadCatalog]);
 
 	// build list of courses, if no courses exist return 'No courses added'
-	let courseList;
-	if (isLoading) {
-		courseList = <Loader />;
-	} else if (!isLoading) {
-		courseList =
-			!courses ||
-			courses.length === 0 ||
-			(active === 'current' && currentCourses.length === 0) ||
-			(active === 'past' && pastCourses.length === 0) ? (
-				<NoData text={'courses'} />
-			) : (
-				<CourseList
-					courses={active === 'current' ? currentCourses : pastCourses}
-				/>
-			);
-	}
+	const courseList = isLoading ? (
+		<Loader />
+	) : (
+		<>
+			<CourseList courses={currentCourses} type={'current'} />
+			<CourseList courses={pastCourses} type={'past'} />
+		</>
+	);
 
 	if (showForm) {
 		return (
 			<Modal
 				isOpen={showForm}
 				content={
-					<CourseForm
-						save={addCoursePrompt}
-						confirmDialog={confirmDialog}
-						setConfirmDialog={setConfirmDialog}
-						courses={courses}
-					/>
+					active === 'current' ? (
+						<CourseForm
+							save={addCoursePrompt}
+							confirmDialog={confirmDialog}
+							setConfirmDialog={setConfirmDialog}
+							courses={courses}
+						/>
+					) : (
+						<CourseForm
+							save={addCoursePrompt}
+							confirmDialog={confirmDialog}
+							setConfirmDialog={setConfirmDialog}
+							courses={courses}
+						/>
+					)
 				}
 				closeModal={toggleForm}
 			/>
