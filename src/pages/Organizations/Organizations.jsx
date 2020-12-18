@@ -189,7 +189,9 @@ function Courses() {
 			<div className="Courses__CourseList">{courseList}</div>
 			<div className="CourseForm p-3">
 				<div onClick={toggleForm} className="font-italic">
-					<CTAButton text="Join Class" />
+					<CTAButton
+						text={active === COMMUNITIES ? 'Search Communities' : 'Join Class'}
+					/>
 				</div>
 			</div>
 		</div>
