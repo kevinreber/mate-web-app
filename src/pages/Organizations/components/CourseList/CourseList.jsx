@@ -39,14 +39,6 @@ function CourseList({ courses = [], type }) {
 		);
 
 	return (
-		// <ul className="Course-List">
-		// 	<li className="Course-List__Type Course Course-Card mate-table">
-		// 		<p className="mate-text-primary Course-Name Course-Semester">
-		// 			{type.toUpperCase()} SEMESTER{type === 'past' ? 'S' : null}
-		// 		</p>
-		// 	</li>
-		// 	{List}
-		// </ul>
 		<Accordion className="Course-List">
 			<AccordionSummary
 				expandIcon={<ExpandMoreIcon />}
