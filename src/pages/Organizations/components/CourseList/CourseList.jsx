@@ -13,7 +13,7 @@ import AccordionDetails from '@material-ui/core/AccordionDetails';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 
 /** Creates a List of User's Courses
- * Courses -> CourseList -> CourseCard -> CourseInfo
+ * Organizations -> Courses -> CourseList -> CourseCard -> CourseInfo
  *
  * @param {array}	 courses	 Array of objects containing course data.
  * @param {string}	 type		 String that is either 'current' or 'past'

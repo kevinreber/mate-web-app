@@ -8,7 +8,7 @@ import Autocomplete from '../../../../components/Autocomplete/Autocomplete';
 import { COMMUNITY_FORM_DATA_INITIAL_STATE } from '../../constants/index';
 
 /** Form to add a course.
- * Courses -> 'Search Communities' Button -> Modal -> CommunityForm
+ * Organizations -> 'Search Communities' Button -> Modal -> CommunityForm
  */
 function CommunityForm({ save, confirmDialog, setConfirmDialog, courses }) {
 	const [errors, setErrors] = useState('');

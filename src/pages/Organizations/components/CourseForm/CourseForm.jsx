@@ -13,7 +13,7 @@ import {
 } from '../../constants/index';
 
 /** Form to add a course.
- * Courses -> 'Join Class' Button -> Modal -> CourseForm
+ * Organizations -> Courses -> 'Join Class' Button -> Modal -> CourseForm
  */
 function CourseForm({ save, confirmDialog, setConfirmDialog, courses }) {
 	/** Get courseCatalog from redux store */
