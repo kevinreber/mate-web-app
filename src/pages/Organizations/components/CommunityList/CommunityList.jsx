@@ -35,24 +35,10 @@ function CourseList({ courses = [], type }) {
 				</>
 			))
 		) : (
-			<NoData text={'courses'} />
+			<NoData text={'communities'} />
 		);
 
-	return (
-		<Accordion className="Course-List">
-			<AccordionSummary
-				expandIcon={<ExpandMoreIcon />}
-				aria-controls={`${type}-content`}
-				id={`${type}-header`}>
-				<p className="mate-text-primary Course-Name Course-Semester">
-					{type.toUpperCase()} SEMESTER{type === 'past' ? 'S' : null}
-				</p>
-			</AccordionSummary>
-			<AccordionDetails>
-				<ul className="Course-List">{List}</ul>
-			</AccordionDetails>
-		</Accordion>
-	);
+	return <ul className="Course-List">{List}</ul>;
 }
 
 CourseList.propTypes = {
