@@ -15,6 +15,11 @@
 	overflow: scroll;
 }
 
+.Courses__CourseList > .MuiPaper-root {
+	background-color: var(--bg-primary-color);
+	border-bottom: 1px solid var(--tertiary-color);
+}
+
 .Course.Course-Card {
 	font-size: 14px;
 	display: flex;
@@ -42,12 +47,39 @@
 	margin-bottom: 0;
 }
 
+.MuiButtonBase-root.MuiAccordionSummary-root.Mui-expanded
+	> .MuiAccordionSummary-content.Mui-expanded,
+.MuiAccordion-root.Mui-expanded:last-child {
+	margin: 0;
+}
+
 /* Course Semester */
-.Course.Course-Card .Course-Name.Course-Semester {
+.MuiAccordionSummary-content > .Course-Name.Course-Semester {
 	font-size: 1rem;
 	width: 100%;
 	padding-bottom: 1rem;
+	padding-top: 1rem;
 	margin-bottom: 0;
+}
+
+.Courses__CourseList .MuiAccordionSummary-root.Mui-expanded {
+	min-height: unset;
+}
+
+.Courses__CourseList .MuiAccordionSummary-content {
+	margin: 0;
+}
+
+.MuiAccordionSummary-root.Mui-expanded {
+	border-bottom: 1px solid var(--tertiary-color);
+}
+
+.MuiCollapse-wrapperInner .MuiAccordionDetails-root {
+	padding: 0;
+}
+
+.Courses__CourseList > .MuiPaper-elevation1 {
+	box-shadow: unset;
 }
 
 .Course.Course-Card .Course-Title {

@@ -5,7 +5,12 @@ import { PropTypes } from 'prop-types';
 /** Components & Helpers */
 import CourseCard from '../CourseCard/CourseCard';
 import NoData from '../../../../components/NoData/NoData';
-import capitalizeFirstLetter from '../../../../utils/capitalizeFirstLetter';
+
+/** MUI */
+import Accordion from '@material-ui/core/Accordion';
+import AccordionSummary from '@material-ui/core/AccordionSummary';
+import AccordionDetails from '@material-ui/core/AccordionDetails';
+import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 
 /** Creates a List of User's Courses
  * Courses -> CourseList -> CourseCard -> CourseInfo
@@ -34,14 +39,27 @@ function CourseList({ courses = [], type }) {
 		);
 
 	return (
-		<ul className="Course-List">
-			<li className="Course-List__Type Course Course-Card mate-table">
+		// <ul className="Course-List">
+		// 	<li className="Course-List__Type Course Course-Card mate-table">
+		// 		<p className="mate-text-primary Course-Name Course-Semester">
+		// 			{type.toUpperCase()} SEMESTER{type === 'past' ? 'S' : null}
+		// 		</p>
+		// 	</li>
+		// 	{List}
+		// </ul>
+		<Accordion className="Course-List">
+			<AccordionSummary
+				expandIcon={<ExpandMoreIcon />}
+				aria-controls={`${type}-content`}
+				id={`${type}-header`}>
 				<p className="mate-text-primary Course-Name Course-Semester">
 					{type.toUpperCase()} SEMESTER{type === 'past' ? 'S' : null}
 				</p>
-			</li>
-			{List}
-		</ul>
+			</AccordionSummary>
+			<AccordionDetails>
+				<ul className="Course-List">{List}</ul>
+			</AccordionDetails>
+		</Accordion>
 	);
 }
 
