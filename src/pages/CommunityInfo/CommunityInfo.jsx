@@ -14,7 +14,7 @@ import db from '../../config/fbConfig';
 import './CommunityInfo.css';
 
 /** Displays Course Information such as assignments and discussion boards
- * Organizations -> CommunityList -> Community -> CommunityInfo
+ * Organizations -> CommunityList -> CommunityCard -> CommunityInfo
  */
 function CommunityInfo() {
 	const { communityId } = useParams();

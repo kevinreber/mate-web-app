@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import CommunityDetails from '../CommunityDetails/CommunityDetails';
 
 /** Displays Header information of Community Info Page
- * Organizations -> CommunityList -> Community -> CommunityInfo -> CommunityInfoHeader
+ * Organizations -> CommunityList -> CommunityCard -> CommunityInfo -> CommunityInfoHeader
  */
 function CommunityInfoHeader({
 	course,

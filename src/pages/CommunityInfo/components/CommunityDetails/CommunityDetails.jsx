@@ -8,7 +8,7 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 import DialogActions from '@material-ui/core/DialogActions';
 
 /** Displays Community Details
- * Organizations -> CommunityList -> Community -> CommunityInfo -> CommunityDetails
+ * Organizations -> CommunityList -> CommunityCard -> CommunityInfo -> CommunityDetails
  */
 function CommunityDetails({ course, title, show, toggle, removeCourse }) {
 	const instructor =
