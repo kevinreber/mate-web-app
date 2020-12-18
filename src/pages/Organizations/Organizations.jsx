@@ -13,7 +13,7 @@ import { addCourseToFB } from '../../store/actions/courses';
 import { fetchCourseCatalog } from '../../store/actions/courseCatalog';
 import { addFlashMessage } from '../../store/actions/flashMessages';
 import db from '../../config/fbConfig';
-import './Courses.css';
+import './Organizations.css';
 import {
 	CONFIRM_DIALOG_INITIAL_STATE,
 	FB,
@@ -175,7 +175,7 @@ function Courses() {
 						Communities
 					</h5>
 				</div>
-				<div className="Courses">
+				<div className="Courses-Courses">
 					<h5
 						id="courses"
 						className={
