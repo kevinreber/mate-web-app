@@ -1,6 +1,7 @@
 /** Dependencies */
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { PropTypes } from 'prop-types';
 
 /** Card displaying course information
  * Organizations -> Courses -> CourseList -> CourseCard -> CourseInfo
@@ -24,5 +25,13 @@ function CourseCard({ id, department, number, term, title }) {
 		</div>
 	);
 }
+
+CourseCard.propTypes = {
+	id: PropTypes.number.isRequired,
+	department: PropTypes.string.isRequired,
+	number: PropTypes.string.isRequired,
+	term: PropTypes.string.isRequired,
+	title: PropTypes.string.isRequired,
+};
 
 export default CourseCard;
