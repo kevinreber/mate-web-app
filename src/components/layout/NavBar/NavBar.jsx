@@ -53,9 +53,9 @@ function NavBar() {
 					</NavLink>
 				</li>
 				<li className="nav-item p-0">
-					<NavLink className="nav-link mate-text-primary" to="/courses">
+					<NavLink className="nav-link mate-text-primary" to="/organizations">
 						<CoursesIcon />
-						<h5 className="hide-lg">Courses</h5>
+						<h5 className="hide-lg">Organizations</h5>
 					</NavLink>
 				</li>
 				<li className="nav-item p-0">

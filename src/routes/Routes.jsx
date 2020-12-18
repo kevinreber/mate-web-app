@@ -10,7 +10,8 @@ import Messages from '../pages/Messages/Messages';
 import Feed from '../pages/Feed/Feed';
 import PostInfo from '../pages/PostInfo/PostInfo';
 import Search from '../pages/Search/Search';
-import Courses from '../pages/Courses/Courses';
+import Organizations from '../pages/Organizations/Organizations';
+import CommunityInfo from '../pages/CommunityInfo/CommunityInfo';
 import CourseInfo from '../pages/CourseInfo/CourseInfo';
 import StudyGroups from '../pages/StudyGroups/StudyGroups';
 import StudyGroupChat from '../pages/StudyGroupChat/StudyGroupChat';
@@ -31,8 +32,17 @@ function Routes() {
 				<PrivateRoute exact path="/feed" component={Feed} />
 				<PrivateRoute exact path="/post/:postId" component={PostInfo} />
 				<PrivateRoute exact path="/search" component={Search} />
-				<PrivateRoute exact path="/courses" component={Courses} />
-				<PrivateRoute exact path="/courses/:courseId/" component={CourseInfo} />
+				<PrivateRoute exact path="/organizations" component={Organizations} />
+				<PrivateRoute
+					exact
+					path="/organizations/communities/:communityId"
+					component={CommunityInfo}
+				/>
+				<PrivateRoute
+					exact
+					path="/organizations/courses/:courseId/"
+					component={CourseInfo}
+				/>
 				<PrivateRoute exact path="/study-groups" component={StudyGroups} />
 				<PrivateRoute
 					exact

@@ -8,7 +8,9 @@ import { Link } from 'react-router-dom';
 function CourseCard({ id, department, number, term, title }) {
 	return (
 		<div className="CourseCard">
-			<Link to={`/courses/${id}`} className="mate-text-secondary table-hover">
+			<Link
+				to={`/organizations/courses/${id}`}
+				className="mate-text-secondary table-hover">
 				<div className="mate-table  Course Course-Card">
 					<p className="mate-text-primary Course-Name">
 						{`${department} ${number}`} <br />
