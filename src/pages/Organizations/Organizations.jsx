@@ -5,6 +5,7 @@ import { useSelector, useDispatch } from 'react-redux';
 /** Components & Helpers */
 import CourseList from './components/CourseList/CourseList';
 import CourseForm from './components/CourseForm/CourseForm';
+import CommunityList from './components/CommunityList/CommunityList';
 import CommunityForm from './components/CommunityForm/CommunityForm';
 import Modal from '../../components/Modal/Modal';
 import Loader from '../../components/layout/Loader/Loader';
@@ -136,6 +137,14 @@ function Courses() {
 		</>
 	);
 
+	const communityList = isLoading ? (
+		<Loader />
+	) : (
+		<>
+			<CommunityList courses={currentCourses} type={CURRENT} />
+		</>
+	);
+
 	if (showForm) {
 		return (
 			<Modal
@@ -186,7 +195,9 @@ function Courses() {
 					</h5>
 				</div>
 			</div>
-			<div className="Courses__CourseList">{courseList}</div>
+			<div className="Courses__CourseList">
+				{active === COMMUNITIES ? communityList : courseList}
+			</div>
 			<div className="CourseForm p-3">
 				<div onClick={toggleForm} className="font-italic">
 					<CTAButton

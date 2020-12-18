@@ -27,7 +27,7 @@ function CommunityCard({ id, department, number, term, title }) {
 }
 
 CommunityCard.propTypes = {
-	id: PropTypes.number.isRequired,
+	id: PropTypes.string.isRequired,
 	department: PropTypes.string.isRequired,
 	number: PropTypes.string.isRequired,
 	term: PropTypes.string.isRequired,
