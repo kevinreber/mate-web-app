@@ -84,7 +84,7 @@ function Connect() {
 	const addStudyGroup = async (data) => {
 		// store studyGroupId given back
 		const newStudyGroupId = await createNewMessage(
-			'study-group',
+			FB.collection,
 			data,
 			null,
 			null,
