@@ -6,7 +6,7 @@ export const INITIAL_STATE = {
 
 /** Firebase Collection constants  */
 export const FB = {
-	collection: 'study-groups',
+	collection: 'study-group',
 	messages: 'messages',
 	users: 'users',
 	orderBy: 'createdAt',
