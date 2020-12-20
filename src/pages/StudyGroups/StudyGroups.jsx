@@ -15,6 +15,7 @@ import StudyGroupForm from './components/StudyGroupForm/StudyGroupForm';
 /** Helpers */
 import { addFlashMessage } from '../../store/actions/flashMessages';
 import createNewMessage from '../../utils/createNewMessage';
+import { FB, MESSAGE } from './constants/index';
 import db from '../../config/fbConfig';
 import './StudyGroups.css';
 
@@ -35,7 +36,7 @@ function Connect() {
 
 	useEffect(() => {
 		const getData = () => {
-			db.collection('study-group').onSnapshot((snapshot) =>
+			db.collection(FB.collection).onSnapshot((snapshot) =>
 				setAllStudyGroups(
 					snapshot.docs.map((doc) => ({
 						id: doc.id,
@@ -95,8 +96,8 @@ function Connect() {
 		dispatch(
 			addFlashMessage({
 				isOpen: true,
-				message: 'Study Group Created!',
-				type: 'success',
+				message: MESSAGE.studyGroupCreated,
+				type: MESSAGE.success,
 			})
 		);
 	};
