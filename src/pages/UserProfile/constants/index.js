@@ -1,11 +1,3 @@
-/** Initial State for Image attachments */
-export const INITIAL_STATE_IMAGE = {
-	attachment_preview: '',
-	attachment: '',
-	name: '',
-	url: '',
-};
-
 /** Firebase Collection constants  */
 export const FB = {
 	users: 'users',
