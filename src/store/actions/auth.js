@@ -17,6 +17,9 @@ import {
 	LOGOUT_FAIL,
 } from './types';
 
+/** Constants */
+import { LOGIN_URL, USER_PROFILE_URL, BEARER } from '../constants/index';
+
 /** Checks if user is already in DB
  *  if user is in DB, last log in will be updated
  *  else user will be added to DB
@@ -118,7 +121,23 @@ export function googleLogin() {
 					auth.signInWithRedirect(provider).then(async (result) => {
 						// Check if user exists - account will be made for new users.
 						await checkIfUserExists(result.user);
+						console.log(result.credential);
+						const token = result.credential.accessToken;
+						const data = {
+							access_token: token,
+							email: result.user.email,
+						};
+						const auth = await fetch(LOGIN_URL, {
+							method: 'POST',
+							headers: {
+								'Content-Type': 'application/json',
+							},
+							body: JSON.stringify(data),
+						}).then((response) => response.json());
 
+						const accessToken = BEARER + auth.data.access_token;
+						const userData = auth.data.user;
+						console.log(userData, accessToken);
 						db.collection('users')
 							.doc(result.user.uid)
 							.get()
@@ -135,7 +154,40 @@ export function googleLogin() {
 				.setPersistence(firebase.auth.Auth.Persistence.SESSION)
 				.then(() => {
 					auth.signInWithPopup(provider).then(async (result) => {
-						console.log(result.credential.idToken);
+						console.log(result.credential);
+						const token = result.credential.accessToken;
+						const data = {
+							access_token: token,
+							email: result.user.email,
+						};
+						const auth = await fetch(LOGIN_URL, {
+							method: 'POST',
+							headers: {
+								'Content-Type': 'application/json',
+							},
+							body: JSON.stringify(data),
+						}).then((response) => response.json());
+
+						const accessToken = BEARER + auth.data.access_token;
+						const userData = auth.data.user;
+						console.log(userData, accessToken);
+						// .then(async (data) => {
+						// 	const proxyUrl = 'https://cors-anywhere.herokuapp.com/';
+						// 	console.log('Success:', data);
+
+						// 	await fetch(proxyUrl + USER_PROFILE_URL, {
+						// 		method: 'GET',
+						// 		headers: {
+						// 			Authorization: BEARER + data.access_token,
+						// 			'Content-Type': 'application/json',
+						// 		},
+						// 	})
+						// 		.then((response) => response.json())
+						// 		.then((data) => {
+						// 			console.log('Success:', data);
+						// 		});
+						// });
+
 						// Check if user exists - account will be made for new users.
 						await checkIfUserExists(result.user);
 						db.collection('users')
