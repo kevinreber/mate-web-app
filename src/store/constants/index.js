@@ -9,6 +9,9 @@ export const LOGIN_URL = `${BASE_URL}/api/login`;
 export const USER_PROFILE_URL = `${BASE_URL}/api/me`;
 export const FEED_URL = `${BASE_URL}/api/feeds`;
 
+export const FOLLOW_USER = `${BASE_URL}/api/follow`;
+export const UNFOLLOW_USER = `${BASE_URL}/api/unfollow`;
+
 export const BEARER = 'Bearer ';
 /* fetch(LOGIN_URL, {
   method: 'POST', // or 'PUT'
