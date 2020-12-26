@@ -7,6 +7,11 @@ const data = {
 
 export const LOGIN_URL = `${BASE_URL}/api/login`;
 export const USER_PROFILE_URL = `${BASE_URL}/api/me`;
+export const USER_PHOTO = `${USER_PROFILE_URL}/photo`;
+export const USER_ABOUT = `${USER_PROFILE_URL}/about`;
+export const USER_SOCIETIES = `${USER_PROFILE_URL}/societies`;
+export const USER_ACHIEVEMENTS = `${USER_PROFILE_URL}/achievements`;
+
 export const FEED_URL = `${BASE_URL}/api/feeds`;
 
 export const FOLLOW_USER = `${BASE_URL}/api/follow`;
