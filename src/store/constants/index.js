@@ -13,9 +13,16 @@ export const USER_SOCIETIES = `${USER_PROFILE_URL}/societies`;
 export const USER_ACHIEVEMENTS = `${USER_PROFILE_URL}/achievements`;
 
 export const FEED_URL = `${BASE_URL}/api/feeds`;
+export const FEED_TYPES = `${FEED_URL}/types`;
 
-export const FOLLOW_USER = `${BASE_URL}/api/follow`;
-export const UNFOLLOW_USER = `${BASE_URL}/api/unfollow`;
+export const STUDY_GROUPS = `${BASE_URL}/study-groups`;
+export const USERS = `${BASE_URL}/users`;
+
+export const CLASSES = `${BASE_URL}/classes`;
+export const USER_CLASSES = `${BASE_URL}/me/classes`;
+
+export const FOLLOW_USER = `${BASE_URL}/follow`;
+export const UNFOLLOW_USER = `${BASE_URL}/unfollow`;
 
 export const BEARER = 'Bearer ';
 /* fetch(LOGIN_URL, {
