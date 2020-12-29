@@ -13,9 +13,9 @@ import {
 	addPostToFB,
 	deletePostFromFB,
 	editPostInFB,
-	getFeed,
 } from '../../store/actions/posts';
 import { addFlashMessage } from '../../store/actions/flashMessages';
+import { getFeed } from './api/api';
 import { FB, MESSAGE, CONFIRM } from './constants/index';
 import db from '../../config/fbConfig';
 import './Feed.css';
@@ -44,26 +44,28 @@ function Feed() {
 	useEffect(() => {
 		// get data from 'feed' collection
 		const getData = async () => {
-			await db
-				.collection(FB.collection)
-				.orderBy(FB.orderBy, FB.order)
-				.get()
-				.then((data) => {
-					setPosts(
-						data.docs.map((doc) => ({
-							id: doc.id,
-							data: doc.data(),
-						}))
-					);
-				})
-				.catch((err) => console.log(err));
-
+			// await db
+			// 	.collection(FB.collection)
+			// 	.orderBy(FB.orderBy, FB.order)
+			// 	.get()
+			// 	.then((data) => {
+			// 		setPosts(
+			// 			data.docs.map((doc) => ({
+			// 				id: doc.id,
+			// 				data: doc.data(),
+			// 			}))
+			// 		);
+			// 	})
+			// 	.catch((err) => console.log(err));
+			const data = await getFeed();
+			console.log(data);
+			setPosts(data.feeds);
 			setIsLoading(false);
 		};
 
 		if (isLoading) {
 			getData();
-			getFeed();
+			// getFeed();
 		}
 	}, [isLoading]);
 
