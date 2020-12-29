@@ -13,6 +13,7 @@ import {
 	addPostToFB,
 	deletePostFromFB,
 	editPostInFB,
+	getFeed,
 } from '../../store/actions/posts';
 import { addFlashMessage } from '../../store/actions/flashMessages';
 import { FB, MESSAGE, CONFIRM } from './constants/index';
@@ -62,6 +63,7 @@ function Feed() {
 
 		if (isLoading) {
 			getData();
+			getFeed();
 		}
 	}, [isLoading]);
 

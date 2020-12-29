@@ -40,20 +40,20 @@ export const BEARER = 'Bearer ';
   console.error('Error:', error);
 }); */
 
-const bearer =
-	'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwczpcL1wvYXBpLm1hdGVhcHAudXNcL2FwaVwvbG9naW4iLCJpYXQiOjE2MDg4NTUzMjYsImV4cCI6MTYwOTExNDUyNiwibmJmIjoxNjA4ODU1MzI2LCJqdGkiOiJyTjMzS3ZjakpWTmxDd1NRIiwic3ViIjoiNCIsInBydiI6IjIzYmQ1Yzg5NDlmNjAwYWRiMzllNzAxYzQwMDg3MmRiN2E1OTc2ZjciLCJ1dWlkIjoiMDc3MTQwMWQtZjZhMi00YzFhLTg5NjUtODFiODg5OTU5NDM3In0.bc7PKIvUTR-2M1qGFgvjJUJp2wbklkJJI2CWqLmiTJY';
+export const BEARER_AUTH_TOKEN = localStorage.getItem('bearerAuthToken');
 
-fetch(USER_PROFILE_URL, {
-	method: 'GET',
-	headers: {
-		Authorization: bearer,
-		'Content-Type': 'application/json',
-	},
-})
-	.then((response) => response.json())
-	.then((data) => {
-		console.log('Success:', data.data.user);
-	})
-	.catch((error) => {
-		console.error('Error:', error);
-	});
+//  ! EXAMPLE REFERENCE BELOW - DO NOT USE
+// fetch(USER_PROFILE_URL, {
+// 	method: 'GET',
+// 	headers: {
+// 		Authorization: bearer,
+// 		'Content-Type': 'application/json',
+// 	},
+// })
+// 	.then((response) => response.json())
+// 	.then((data) => {
+// 		console.log('Success:', data.data.user);
+// 	})
+// 	.catch((error) => {
+// 		console.error('Error:', error);
+// 	});

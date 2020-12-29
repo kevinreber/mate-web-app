@@ -137,7 +137,12 @@ export function googleLogin() {
 
 						const accessToken = BEARER + auth.data.access_token;
 						const userData = auth.data.user;
+						/** Store Bearer token that will be used as an access token to fetch data from our API */
+						localStorage.setItem('bearerAuthToken', accessToken);
+
+						// log data received from API
 						console.log(userData, accessToken);
+
 						db.collection('users')
 							.doc(result.user.uid)
 							.get()
@@ -170,23 +175,11 @@ export function googleLogin() {
 
 						const accessToken = BEARER + auth.data.access_token;
 						const userData = auth.data.user;
-						console.log(userData, accessToken);
-						// .then(async (data) => {
-						// 	const proxyUrl = 'https://cors-anywhere.herokuapp.com/';
-						// 	console.log('Success:', data);
+						/** Store Bearer token that will be used as an access token to fetch data from our API */
+						localStorage.setItem('bearerAuthToken', accessToken);
 
-						// 	await fetch(proxyUrl + USER_PROFILE_URL, {
-						// 		method: 'GET',
-						// 		headers: {
-						// 			Authorization: BEARER + data.access_token,
-						// 			'Content-Type': 'application/json',
-						// 		},
-						// 	})
-						// 		.then((response) => response.json())
-						// 		.then((data) => {
-						// 			console.log('Success:', data);
-						// 		});
-						// });
+						// log data received from API
+						console.log(userData, accessToken);
 
 						// Check if user exists - account will be made for new users.
 						await checkIfUserExists(result.user);
