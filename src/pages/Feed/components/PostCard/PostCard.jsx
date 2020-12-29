@@ -156,7 +156,6 @@ function PostCard({
 	};
 
 	/** Edit Post Form **************************/
-
 	// Updates edited post's data
 	const editPost = (data) => {
 		edit(id, data);
@@ -322,7 +321,9 @@ function PostCard({
 				/>
 			</div>
 			<div className="Post-Card__Right Post__timestamp">
-				<p>{timestamp ? dateFromNowFormatter(timestamp) : null}</p>
+				{/* <p>{timestamp ? dateFromNowFormatter(timestamp) : null}</p> */}
+				<p>{timestamp && timestamp}</p>
+
 				{currentUser.uid === userId ? (
 					<>
 						<IconButton onClick={togglePopover}>

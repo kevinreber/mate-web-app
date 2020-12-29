@@ -13,30 +13,33 @@ import PostCard from '../PostCard/PostCard';
  * @param {function} 	edit	Function to edit post. User will only see if they made post.
  */
 function FeedList({ posts, remove, edit }) {
-	const List = posts.map((post) => (
-		<PostCard
-			id={post.id}
-			key={post.id}
-			title={post.data.title}
-			username={post.data.username}
-			userId={post.data.userId}
-			avatar={post.data.avatar}
-			description={post.data.description}
-			location={post.data.location}
-			type={post.data.type}
-			start={post.data.start}
-			end={post.data.end}
-			attachment_preview={post.data.attachment_preview}
-			attachment={post.data.attachment}
-			attachment_name={post.data.attachment_name}
-			timestamp={post.data.timestamp}
-			last_updated={post.data.last_updated}
-			comments={post.data.num_of_comments}
-			isBookmarked={false}
-			remove={remove}
-			edit={edit}
-		/>
-	));
+	const List = posts.map((post) => {
+		console.log(post.media);
+		return (
+			<PostCard
+				id={post.id}
+				key={post.id}
+				title={post.title}
+				type={post.type}
+				username={post.user.name}
+				userId={post.user.id}
+				avatar={post.user.photo_url}
+				description={post.description}
+				location={post.location}
+				start={post.start}
+				end={post.end}
+				// attachment_preview={post.media[0]['url']}
+				// attachment={post.media}
+				// attachment_name={post.data.attachment_name}
+				timestamp={post.created}
+				// last_updated={post.data.last_updated}
+				// comments={post.data.num_of_comments}
+				// isBookmarked={false}
+				remove={remove}
+				edit={edit}
+			/>
+		);
+	});
 
 	return <>{List}</>;
 }
@@ -48,3 +51,20 @@ FeedList.propTypes = {
 };
 
 export default FeedList;
+
+// created: "4 weeks ago"
+// description: "hfhggh"
+// end: null
+// id: "8b20a768-bd26-4cd0-a39a-70c5dfe7cfd3"
+// location: "ytthfg"
+// media: Array(1)
+// 0: {url: "https://api.mateapp.us/storage/46/conversions/8b20…-4cd0-a39a-70c5dfe7cfd35fc3a3886ef6c-feed_640.jpg"}
+// length: 1
+// __proto__: Array(0)
+// start: null
+// title: "ygg"
+// type: "Marketplace"
+// user:
+// id: "e1b36a1a-6997-4a90-8205-cc016912fc76"
+// name: "MD.TAWSIF-UL- KARIM"
+// photo_url:
