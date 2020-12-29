@@ -36,3 +36,8 @@ export const CONFIRM = {
 	title: 'Are you sure you want to remove post?',
 	subtitle: "You can't undo this operation",
 };
+
+/** API Information */
+const BASE_URL = 'https://api.mateapp.us';
+export const FEED_URL = `${BASE_URL}/api/feeds`;
+export const BEARER_AUTH_TOKEN = localStorage.getItem('bearerAuthToken');
