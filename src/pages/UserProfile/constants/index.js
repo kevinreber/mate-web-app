@@ -24,8 +24,9 @@ export const CONFIRM = {
 	subtitle: "You can't undo this operation",
 };
 
+/** API Information */
 const BASE_URL = 'https://api.mateapp.us';
-
 export const USERS = `${BASE_URL}/users`;
 export const FOLLOW_USER = `${BASE_URL}/follow`;
 export const UNFOLLOW_USER = `${BASE_URL}/unfollow`;
+export const BEARER_AUTH_TOKEN = localStorage.getItem('bearerAuthToken');
