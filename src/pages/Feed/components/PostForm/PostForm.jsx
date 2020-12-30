@@ -64,10 +64,11 @@ function PostForm({ save }) {
 	});
 
 	const handleSelect = async (value) => {
-		const results = await geocodeByAddress(value);
-		const latLng = await getLatLng(results[0]);
+		// ! to avoid errors with API rules,  lat & lng won't be stored
+		// const results = await geocodeByAddress(value);
+		// const latLng = await getLatLng(results[0]);
 		setAddress(value);
-		setCoordinates(latLng);
+		// setCoordinates(latLng);
 	};
 
 	/** Update state in formData */
