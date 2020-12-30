@@ -44,28 +44,13 @@ function Feed() {
 	useEffect(() => {
 		// get data from 'feed' collection
 		const getData = async () => {
-			// await db
-			// 	.collection(FB.collection)
-			// 	.orderBy(FB.orderBy, FB.order)
-			// 	.get()
-			// 	.then((data) => {
-			// 		setPosts(
-			// 			data.docs.map((doc) => ({
-			// 				id: doc.id,
-			// 				data: doc.data(),
-			// 			}))
-			// 		);
-			// 	})
-			// 	.catch((err) => console.log(err));
 			const data = await getFeed();
-			console.log(data);
 			setPosts(data.feeds);
 			setIsLoading(false);
 		};
 
 		if (isLoading) {
 			getData();
-			// getFeed();
 		}
 	}, [isLoading]);
 
