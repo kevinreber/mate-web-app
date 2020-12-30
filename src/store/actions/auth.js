@@ -1,3 +1,6 @@
+/** Dependencies */
+import axios from 'axios';
+
 /** Helpers */
 import { auth, provider } from '../../config/fbConfig';
 import createFbTimestamp from '../../utils/createFbTimestamp';
@@ -18,7 +21,13 @@ import {
 } from './types';
 
 /** Constants */
-import { LOGIN_URL, USER_PROFILE_URL, BEARER } from '../constants/index';
+import {
+	LOGIN_URL,
+	USER_PROFILE_URL,
+	USER_PHOTO,
+	BEARER,
+	BEARER_AUTH_TOKEN,
+} from '../constants/index';
 
 /** Checks if user is already in DB
  *  if user is in DB, last log in will be updated
@@ -101,7 +110,46 @@ async function addNewUserToDB(user) {
 				day: idx + 1,
 			});
 	});
+
+	await updateProfile(user, user.photoURL);
+
 	console.log('New user created', data);
+}
+
+async function updateProfile(user, photo) {
+	await axios
+		.all([
+			axios(USER_PROFILE_URL, {
+				method: 'POST',
+				headers: {
+					Authorization: BEARER_AUTH_TOKEN,
+					'Content-Type': 'application/json',
+				},
+				body: {
+					first_name: user.first_name,
+					last_name: user.last_name,
+					display_name: user.displayName,
+					phone_number: user.phoneNumber,
+				},
+			}),
+			axios(USER_PHOTO, {
+				method: 'POST',
+				headers: {
+					Authorization: BEARER_AUTH_TOKEN,
+					'Content-Type': 'application/json',
+				},
+				body: {
+					photo: photo,
+				},
+			}),
+		])
+		.then((data1, data2) => {
+			console.log('Success:', data1.data);
+			console.log('Success:', data2.data);
+		})
+		.catch((error) => {
+			console.error('Error:', error);
+		});
 }
 
 async function updateUserLogin(user) {
@@ -121,7 +169,7 @@ export function googleLogin() {
 					auth.signInWithRedirect(provider).then(async (result) => {
 						// Check if user exists - account will be made for new users.
 						await checkIfUserExists(result.user);
-						console.log(result.credential);
+						console.log(result.credential, result.user);
 						const token = result.credential.accessToken;
 						const data = {
 							access_token: token,
@@ -159,7 +207,7 @@ export function googleLogin() {
 				.setPersistence(firebase.auth.Auth.Persistence.SESSION)
 				.then(() => {
 					auth.signInWithPopup(provider).then(async (result) => {
-						console.log(result.credential);
+						console.log(result.credential, result.user);
 						const token = result.credential.accessToken;
 						const data = {
 							access_token: token,
