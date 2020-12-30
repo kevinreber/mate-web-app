@@ -25,7 +25,7 @@ export const CONFIRM = {
 };
 
 /** API Information */
-const BASE_URL = 'https://api.mateapp.us';
+const BASE_URL = 'https://api.mateapp.us/api';
 export const USERS = `${BASE_URL}/users`;
 export const FOLLOW_USER = `${BASE_URL}/follow`;
 export const UNFOLLOW_USER = `${BASE_URL}/unfollow`;
