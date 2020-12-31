@@ -44,9 +44,13 @@ function Feed() {
 	useEffect(() => {
 		// get data from 'feed' collection
 		const getData = async () => {
-			const data = await getFeed();
-			setPosts(data.feeds);
-			setIsLoading(false);
+			await getFeed()
+				.then((data) => setPosts(data.feeds))
+				.catch((err) => 'Error:' + console.log(err))
+				.finally(() =>
+					// Loading finished
+					setIsLoading(false)
+				);
 		};
 
 		if (isLoading) {
