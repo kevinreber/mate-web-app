@@ -15,6 +15,7 @@ import Modal from '../../components/Modal/Modal';
 import createFbTimestamp from '../../utils/createFbTimestamp';
 import { addFlashMessage } from '../../store/actions/flashMessages';
 import { deleteAccount } from '../../store/actions/auth';
+import { getUserData } from './api/api';
 import createNewMessage from '../../utils/createNewMessage';
 import { FB, MESSAGE, CONFIRM } from './constants/index';
 import './UserProfile.css';
@@ -40,74 +41,76 @@ function UserProfile() {
 	});
 
 	useEffect(() => {
-		async function getUserData() {
-			const doc = await db.collection(FB.users).doc(userId).get();
+		async function getData() {
+			// const doc = await db.collection(FB.users).doc(userId).get();
 
-			/** if user doesn't exist, redirect user to '/feed' */
-			if (!doc.exists) {
-				history.push('/feed');
-				dispatch(
-					addFlashMessage({
-						isOpen: true,
-						message: MESSAGE.noUser,
-						type: FB.error,
-					})
+			// /** if user doesn't exist, redirect user to '/feed' */
+			// if (!doc.exists) {
+			// 	history.push('/feed');
+			// 	dispatch(
+			// 		addFlashMessage({
+			// 			isOpen: true,
+			// 			message: MESSAGE.noUser,
+			// 			type: FB.error,
+			// 		})
+			// 	);
+			// } else {
+			// 	db.collection(FB.users)
+			// 		.doc(userId)
+			// 		.onSnapshot((snapshot) => setUser(snapshot.data()));
+
+			// 	db.collection(FB.users)
+			// 		.doc(userId)
+			// 		.collection(FB.availability)
+			// 		.orderBy(FB.day)
+			// 		.onSnapshot((snapshot) =>
+			// 			setUserAvailability(
+			// 				snapshot.docs.map((doc) => {
+			// 					return {
+			// 						id: doc.id,
+			// 						data: doc.data(),
+			// 					};
+			// 				})
+			// 			)
+			// 		);
+
+			// 	db.collection(FB.class)
+			// 		.where(FB.users, 'array-contains', userId)
+			// 		.onSnapshot((snapshot) =>
+			// 			setUserCourses(
+			// 				snapshot.docs.map((doc) => ({
+			// 					id: doc.id,
+			// 					data: doc.data(),
+			// 				}))
+			// 			)
+			// 		);
+
+			// 	db.collection(FB.feeds)
+			// 		// firebase does not allow you to use 'where'
+			// 		// and 'orderby' on different fields
+			// 		.where('userId', '==', userId)
+			// 		.get()
+			// 		.then((data) => {
+			// 			setUserPosts(
+			// 				data.docs.map((doc) => ({
+			// 					id: doc.id,
+			// 					data: doc.data(),
+			// 				}))
+			// 			);
+			// 		})
+			// 		.catch((err) => console.log(err));
+			await getUserData(userId)
+				.then((data) => setUser(data.data))
+				.catch((err) => 'Error:' + console.log(err))
+				.finally(() =>
+					// Loading finished
+					setIsLoading(false)
 				);
-			} else {
-				db.collection(FB.users)
-					.doc(userId)
-					.onSnapshot((snapshot) => setUser(snapshot.data()));
-
-				db.collection(FB.users)
-					.doc(userId)
-					.collection(FB.availability)
-					.orderBy(FB.day)
-					.onSnapshot((snapshot) =>
-						setUserAvailability(
-							snapshot.docs.map((doc) => {
-								return {
-									id: doc.id,
-									data: doc.data(),
-								};
-							})
-						)
-					);
-
-				db.collection(FB.class)
-					.where(FB.users, 'array-contains', userId)
-					.onSnapshot((snapshot) =>
-						setUserCourses(
-							snapshot.docs.map((doc) => ({
-								id: doc.id,
-								data: doc.data(),
-							}))
-						)
-					);
-
-				db.collection(FB.feeds)
-					// firebase does not allow you to use 'where'
-					// and 'orderby' on different fields
-					.where('userId', '==', userId)
-					.get()
-					.then((data) => {
-						setUserPosts(
-							data.docs.map((doc) => ({
-								id: doc.id,
-								data: doc.data(),
-							}))
-						);
-					})
-					.catch((err) => console.log(err));
-
-				// Loading finished
-				setIsLoading(false);
-			}
 		}
 		if (userId) {
-			getUserData();
+			getData();
 		}
 	}, [userId, dispatch, history]);
-
 	const toggleEditProfile = () => setEditProfile((edit) => !edit);
 
 	/** Send New Message to User ****************************************/
