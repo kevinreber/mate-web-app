@@ -80,13 +80,16 @@ function PostForm({ save }) {
 
 			/** Validates attachment and prompts error */
 			if (fileIsImage(file, setErrors)) {
+				setFormData((fData) => {
+					return { ...fData, media: file };
+				});
 				setImage((data) => ({
 					...data,
 					attachment_preview: URL.createObjectURL(file),
 					attachment: file,
 					name: file.name,
 				}));
-				handleUpload(file);
+				// handleUpload(file);
 			}
 		} else {
 			let { name, value } = e.target;
@@ -158,10 +161,16 @@ function PostForm({ save }) {
 	const handleSubmit = (e) => {
 		e.preventDefault();
 		if (validateFormData()) {
-			// formData.location = {
-			// 	address,
-			// 	coordinates,
-			// };
+			// let data = new FormData();
+			// data.append('title', formData.title);
+			// data.append('description', formData.description);
+			// data.append('feed_type_id', formData.feed_type_id);
+			// data.append('start', formData.start);
+			// data.append('end', formData.end);
+			// data.append('media', formData.media);
+			// data.append('user', user);
+			// data.append('location', address);
+			// console.log(formData, data);
 
 			formData.location = address;
 
