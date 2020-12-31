@@ -1,6 +1,38 @@
 # Mate
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## To-Do
+
+### Login
+
+- [] Use google data to autofill profile information for new users
+
+### Profile
+
+- [] Set up API calls
+
+### Feed
+
+- [] Set up Post Requests for new posts and how to handle media files
+- [] 'feed_type_id' required?
+- [] How to filter feed types
+- [] Do we allow Comments with new API?
+
+### Study Groups
+
+- [] Set up API calls
+
+### Users
+
+- [] Set up API calls
+
+### classes
+
+- [] Set up API calls
+- [] Fix Berkeleytime API
+
+### Questions
+
+- [] How are messages set up to work?
 
 ## Available Scripts
 
