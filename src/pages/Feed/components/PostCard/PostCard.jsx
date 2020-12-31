@@ -14,7 +14,6 @@ import Modal from '../../../../components/Modal/Modal';
 import { addFlashMessage } from '../../../../store/actions/flashMessages';
 import { showModalContent } from '../../../../store/actions/modal';
 import createNewMessage from '../../../../utils/createNewMessage';
-import dateFromNowFormatter from '../../../../utils/dateFromNowFormatter';
 import copyLinkToClipBoard from '../../../../utils/copyLinkToClipBoard';
 
 /** MUI */
@@ -63,8 +62,8 @@ function PostCard({
 	userId,
 	avatar,
 	description,
-	location = null,
-	type = null,
+	location,
+	type,
 	start = null,
 	end = null,
 	attachment_preview = null,
@@ -143,10 +142,10 @@ function PostCard({
 		) : null;
 
 	const showAttachment =
-		attachment !== '' ? (
+		attachment !== [] ? (
 			<img
 				className="Post-Card__Attachment"
-				src={attachment}
+				src={attachment.url}
 				alt={attachment_name}
 			/>
 		) : null;
@@ -282,12 +281,10 @@ function PostCard({
 						<div className="Post-Card__Body mate-text-secondary">
 							<p className="description">{description}</p>
 							{showAttachment}
-							{location && location.address !== '' ? (
-								<span className="location">
-									<LocationOnIcon />
-									{location.address}
-								</span>
-							) : null}
+							<span className="location">
+								<LocationOnIcon />
+								{location}
+							</span>
 							<span>{eventTime}</span>
 						</div>
 					</Link>
@@ -321,9 +318,7 @@ function PostCard({
 				/>
 			</div>
 			<div className="Post-Card__Right Post__timestamp">
-				{/* <p>{timestamp ? dateFromNowFormatter(timestamp) : null}</p> */}
-				<p>{timestamp && timestamp}</p>
-
+				<p>{timestamp}</p>
 				{currentUser.uid === userId ? (
 					<>
 						<IconButton onClick={togglePopover}>

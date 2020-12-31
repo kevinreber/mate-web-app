@@ -27,7 +27,7 @@ function FeedList({ posts, remove, edit }) {
 			start={post.start}
 			end={post.end}
 			// attachment_preview={post.media[0]['url']}
-			// attachment={post.media}
+			attachment={post.media[0] || post.media}
 			// attachment_name={post.data.attachment_name}
 			timestamp={post.created}
 			// last_updated={post.data.last_updated}
