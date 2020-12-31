@@ -23,32 +23,22 @@ export async function getFeed() {
 		});
 }
 
-//  TODO: Configure post data, receiving error message below when sending request
-// {"error":true,"message":"The given data was invalid.",
-// 	"data":{"
-// 		feed_type_id":["The feed type id field is required."],
-// 		"location":["The location field is required."]
-// }}
 export async function postFeed(data) {
 	console.log(data);
-	return (
-		axios(FEED_URL, {
-			method: 'POST',
-			headers: {
-				Authorization: BEARER_AUTH_TOKEN,
-				// 'Content-Type': 'application/json',
-			},
-			data,
+	return axios(FEED_URL, {
+		method: 'POST',
+		headers: {
+			Authorization: BEARER_AUTH_TOKEN,
+		},
+		data,
+	})
+		.then((data) => {
+			console.log('Success:', data.data);
+			return data.data;
 		})
-			// .then((response) => response.json())
-			.then((data) => {
-				console.log('Success:', data.data);
-				return data.data;
-			})
-			.catch((error) => {
-				console.error('Error:', error);
-			})
-	);
+		.catch((error) => {
+			console.error('Error:', error);
+		});
 }
 
 export async function getFeedTypes() {
