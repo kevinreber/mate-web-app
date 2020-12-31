@@ -81,7 +81,7 @@ function PostForm({ save }) {
 			/** Validates attachment and prompts error */
 			if (fileIsImage(file, setErrors)) {
 				setFormData((fData) => {
-					return { ...fData, media: file };
+					return { ...fData, media: URL.createObjectURL(file) };
 				});
 				setImage((data) => ({
 					...data,
@@ -303,7 +303,7 @@ function PostForm({ save }) {
 				</div>
 				<div className="form-group d-flex justify-content-between align-items-baseline">
 					<label htmlFor="feed_type_id" className="float-left mr-4">
-						Type
+						Type*
 					</label>
 					<select
 						id="postType"
@@ -313,7 +313,7 @@ function PostForm({ save }) {
 						value={formData.feed_type_id}
 						required>
 						<option className="option-disabled" value="" disabled>
-							Select Type*
+							Select Type
 						</option>
 						{postTypeOptions.map((option) => (
 							<option key={option.id} value={option.id}>
