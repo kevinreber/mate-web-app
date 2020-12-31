@@ -8,7 +8,6 @@ import moment from 'moment';
 /** Components & Helpers */
 import EditPostForm from '../EditPostForm/EditPostForm';
 import PopoverActions from '../../../../components/PopoverActions/PopoverActions';
-import PopoverShareAction from '../../../../components/PopoverShareAction/PopoverShareAction';
 import NewMessageForm from '../../../Notifications/components/NewMessageForm/NewMessageForm';
 import Modal from '../../../../components/Modal/Modal';
 import { addFlashMessage } from '../../../../store/actions/flashMessages';
@@ -19,14 +18,9 @@ import copyLinkToClipBoard from '../../../../utils/copyLinkToClipBoard';
 /** MUI */
 import IconButton from '@material-ui/core/IconButton';
 import LocationOnIcon from '@material-ui/icons/LocationOn';
-import ModeCommentOutlinedIcon from '@material-ui/icons/ModeCommentOutlined';
-import CalendarTodayOutlinedIcon from '@material-ui/icons/CalendarTodayOutlined';
-import BookmarkBorderOutlinedIcon from '@material-ui/icons/BookmarkBorderOutlined';
 import MoreHorizOutlinedIcon from '@material-ui/icons/MoreHorizOutlined';
-import BookmarkIcon from '@material-ui/icons/Bookmark';
-import ShareIcon from '@material-ui/icons/Share';
-import SendIcon from '@material-ui/icons/Send';
 import Avatar from '@material-ui/core/Avatar';
+import PostCardFooter from '../CardFooter/PostCardFooter';
 
 /** ! TEMP URL */
 const HOST_URL = 'localhost:3000';
@@ -82,12 +76,6 @@ function PostCard({
 
 	const [showEditForm, setShowEditForm] = useState(false);
 	const [showMessageForm, setShowMessageForm] = useState(false);
-
-	const BookmarkStatus = !isBookmarked ? (
-		<BookmarkBorderOutlinedIcon />
-	) : (
-		<BookmarkIcon />
-	);
 
 	/** PopoverActions Props for Admin ***************/
 	const [anchorEl, setAnchorEl] = useState(null);
@@ -216,6 +204,7 @@ function PostCard({
 		);
 	};
 
+	// Form to forward post to another User as a message
 	if (showMessageForm) {
 		return (
 			<Modal
@@ -291,26 +280,13 @@ function PostCard({
 				</div>
 			</div>
 			<div className="Post-Card__Footer">
-				<IconButton>
-					<Link to={`/post/${id}`}>
-						<ModeCommentOutlinedIcon />
-						{comments ? (
-							<span className="number-of-comments">{comments}</span>
-						) : null}
-					</Link>
-				</IconButton>
-				<IconButton>
-					<CalendarTodayOutlinedIcon />
-				</IconButton>
-				<IconButton>{BookmarkStatus}</IconButton>
-				<IconButton onClick={toggleMessageForm}>
-					<SendIcon />
-				</IconButton>
-				<IconButton onClick={toggleSharePopover}>
-					<ShareIcon />
-				</IconButton>
-				<PopoverShareAction
-					id={popoverShareId}
+				<PostCardFooter
+					id={id}
+					comments={comments}
+					isBookmarked={isBookmarked}
+					toggleMessageForm={toggleMessageForm}
+					toggleSharePopover={toggleSharePopover}
+					shareId={popoverShareId}
 					open={openShare}
 					anchorEl={shareAnchorEl}
 					close={handleShareClose}
