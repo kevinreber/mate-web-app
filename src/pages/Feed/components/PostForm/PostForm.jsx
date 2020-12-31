@@ -11,7 +11,6 @@ import { postTypeOptions, INITIAL_STATE_IMAGE } from '../../constants/index';
 /** Components && Helpers */
 import SubmitButton from '../../../../components/SubmitButton/SubmitButton';
 import ProgressBar from '../../../../components/ProgressBar/ProgressBar';
-import createFbTimestamp from '../../../../utils/createFbTimestamp';
 import fileIsImage from '../../../../utils/validateImage';
 import { storage } from '../../../../config/fbConfig';
 
@@ -41,23 +40,13 @@ function PostForm({ save }) {
 		start: null,
 		end: null,
 		media: [],
-		// attachment_name: '',
 		user: {
 			id: user.id,
 			name: user.name,
 			photo_url: user.photo_url,
 		},
-		// timestamp: createFbTimestamp(),
-		// last_updated: createFbTimestamp(),
 		// num_of_comments: 0,
 	};
-
-	// {"error":true,"message":"The given data was invalid.",
-	// "data":{
-	// 	"feed_type_id":["The feed type id field is required."],
-	// 	"title":["The title field is required."],
-	// 	"description":["The description field is required."],
-	// 	"location":["The location field is required."]}}
 
 	const [errors, setErrors] = useState('');
 	const [formData, setFormData] = useState(INITIAL_STATE);
@@ -100,7 +89,6 @@ function PostForm({ save }) {
 				handleUpload(file);
 			}
 		} else {
-			console.log(e.target);
 			let { name, value } = e.target;
 
 			/** Handles 'start' and 'end' date fields */
@@ -118,6 +106,7 @@ function PostForm({ save }) {
 	/** Reset all formData */
 	const resetFormData = () => {
 		setFormData(INITIAL_STATE);
+		setAddress('');
 		resetAttachment();
 	};
 
@@ -152,6 +141,14 @@ function PostForm({ save }) {
 		}
 		if (!formData.description) {
 			setErrors('*Description required');
+			return false;
+		}
+		if (!formData.feed_type_id) {
+			setErrors('*Type required');
+			return false;
+		}
+		if (!address) {
+			setErrors('*Location required');
 			return false;
 		}
 		return true;
