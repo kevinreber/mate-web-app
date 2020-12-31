@@ -3,7 +3,7 @@ import axios from 'axios';
 
 import { ALL_USERS, BEARER_AUTH_TOKEN } from '../api/api';
 
-export const getAllUsersData = () => {
+export const getAllUsersData = async () => {
 	return axios(ALL_USERS, {
 		method: 'GET',
 		headers: {
