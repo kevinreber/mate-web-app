@@ -28,27 +28,36 @@ function PostForm({ save }) {
 	/** Get user data */
 	const user = useSelector((state) => {
 		return {
-			userId: state.auth.user.uid,
-			username: state.auth.user.displayName,
-			avatar: state.auth.user.photoURL,
+			id: state.auth.user.uid,
+			name: state.auth.user.displayName,
+			photo_url: state.auth.user.photoURL,
 		};
 	});
 
 	const INITIAL_STATE = {
-		userId: user.userId,
-		username: user.username,
-		avatar: user.avatar,
 		title: '',
 		description: '',
-		type: '',
+		feed_type_id: '',
 		start: null,
 		end: null,
-		attachment: '',
-		attachment_name: '',
-		timestamp: createFbTimestamp(),
-		last_updated: createFbTimestamp(),
-		num_of_comments: 0,
+		media: [],
+		// attachment_name: '',
+		user: {
+			id: user.id,
+			name: user.name,
+			photo_url: user.photo_url,
+		},
+		// timestamp: createFbTimestamp(),
+		// last_updated: createFbTimestamp(),
+		// num_of_comments: 0,
 	};
+
+	// {"error":true,"message":"The given data was invalid.",
+	// "data":{
+	// 	"feed_type_id":["The feed type id field is required."],
+	// 	"title":["The title field is required."],
+	// 	"description":["The description field is required."],
+	// 	"location":["The location field is required."]}}
 
 	const [errors, setErrors] = useState('');
 	const [formData, setFormData] = useState(INITIAL_STATE);
@@ -58,10 +67,10 @@ function PostForm({ save }) {
 
 	// location data
 	const [address, setAddress] = useState('');
-	const [coordinates, setCoordinates] = useState({
-		lat: null,
-		lng: null,
-	});
+	// const [coordinates, setCoordinates] = useState({
+	// 	lat: null,
+	// 	lng: null,
+	// });
 
 	const handleSelect = async (value) => {
 		// ! to avoid errors with API rules,  lat & lng won't be stored
@@ -91,6 +100,7 @@ function PostForm({ save }) {
 				handleUpload(file);
 			}
 		} else {
+			console.log(e.target);
 			let { name, value } = e.target;
 
 			/** Handles 'start' and 'end' date fields */
@@ -117,9 +127,7 @@ function PostForm({ save }) {
 	const resetAttachment = (removeUrl = false) => {
 		if (removeUrl) {
 			const storageRef = storage.ref();
-			const storageImage = storageRef.child(
-				`feed/${user.userId}/${image.name}`
-			);
+			const storageImage = storageRef.child(`feed/${user.id}/${image.name}`);
 
 			storageImage
 				.delete()
@@ -153,10 +161,12 @@ function PostForm({ save }) {
 	const handleSubmit = (e) => {
 		e.preventDefault();
 		if (validateFormData()) {
-			formData.location = {
-				address,
-				coordinates,
-			};
+			// formData.location = {
+			// 	address,
+			// 	coordinates,
+			// };
+
+			formData.location = address;
 
 			save(formData);
 			// Clear state of form
@@ -167,7 +177,7 @@ function PostForm({ save }) {
 
 	// Handles image upload to DB
 	const handleUpload = async (image) => {
-		const storageRef = storage.ref(`feed/${user.userId}/${image.name}`);
+		const storageRef = storage.ref(`feed/${user.id}/${image.name}`);
 
 		storageRef.put(image).on(
 			'state_changed',
@@ -184,7 +194,7 @@ function PostForm({ save }) {
 				const url = await storageRef.getDownloadURL();
 				setFormData((fData) => ({
 					...fData,
-					attachment: url,
+					media: url,
 					attachment_name: image.name,
 				}));
 			}
@@ -240,7 +250,7 @@ function PostForm({ save }) {
 				</div>
 				<div className="form-group">
 					<label htmlFor="location" className="float-left">
-						Location
+						Location*
 					</label>
 					<PlacesAutocomplete
 						value={address}
@@ -258,6 +268,7 @@ function PostForm({ save }) {
 										placeholder: 'Type address',
 										id: 'location',
 										className: 'form-control mate-form-input',
+										required: true,
 									})}
 								/>
 								<div className="Autocomplete-Location-List">
@@ -285,20 +296,23 @@ function PostForm({ save }) {
 					</PlacesAutocomplete>
 				</div>
 				<div className="form-group d-flex justify-content-between align-items-baseline">
-					<label htmlFor="type" className="float-left mr-4">
+					<label htmlFor="feed_type_id" className="float-left mr-4">
 						Type
 					</label>
 					<select
 						id="postType"
 						className="form-control mate-form-input"
 						onChange={handleChange}
-						name="type"
-						value={formData.type}>
+						name="feed_type_id"
+						value={formData.feed_type_id}
+						required>
 						<option className="option-disabled" value="" disabled>
-							Select Type
+							Select Type*
 						</option>
 						{postTypeOptions.map((option) => (
-							<option key={option}>{option}</option>
+							<option key={option.id} value={option.id}>
+								{option.name}
+							</option>
 						))}
 					</select>
 				</div>

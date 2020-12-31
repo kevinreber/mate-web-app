@@ -15,7 +15,7 @@ import {
 	editPostInFB,
 } from '../../store/actions/posts';
 import { addFlashMessage } from '../../store/actions/flashMessages';
-import { getFeed } from './api/api';
+import { getFeed, postFeed } from './api/api';
 import { FB, MESSAGE, CONFIRM } from './constants/index';
 import db from '../../config/fbConfig';
 import './Feed.css';
@@ -58,8 +58,9 @@ function Feed() {
 	const [showForm, setShowForm] = useState(false);
 	const toggleForm = () => setShowForm((show) => !show);
 
-	const addPost = (postData) => {
-		dispatch(addPostToFB(postData));
+	const addPost = async (postData) => {
+		// dispatch(addPostToFB(postData));
+		await postFeed(postData);
 		setShowForm(false);
 		dispatch(
 			addFlashMessage({
