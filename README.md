@@ -12,8 +12,12 @@
 
 ### Feed
 
-- [] Set up Post Requests for new posts and how to handle media files
-- [] 'feed_type_id' required?
+- [x] Set up Post Requests for new posts
+- [x] Move Post Card Footer into it's own component
+- [x] 'feed_type_id' required?
+- [x] Add validators for new required fields
+- [] ? Prompt message errors to user
+- [] Handle media files when creating new post
 - [] How to filter feed types
 - [] Do we allow Comments with new API?
 
@@ -24,8 +28,16 @@
 ### Users
 
 - [] Set up API calls
+- [] ? Get user's classes
+- [] ? Get user's skills(keywords)
+- [] ? Get user's availability
+- [] ? Get user's portfolio
+- [] ? Get user's background image
+- [] is user a tutor?
+- [] style user's followers/following
+- [] style user's is_following
 
-### classes
+### Classes
 
 - [] Set up API calls
 - [] Fix Berkeleytime API
@@ -33,6 +45,7 @@
 ### Questions
 
 - [] How are messages set up to work?
+- [] Prompt user if they created a new account?
 
 ## Available Scripts
 
