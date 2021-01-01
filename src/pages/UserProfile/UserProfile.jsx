@@ -227,6 +227,23 @@ function UserProfile() {
 		);
 	}
 
+	// 'Success - Other User:',
+	// 	{
+	// 		about: '',
+	// 		achievements: '',
+	// 		display_name: 'TasnuvaOshin',
+	// 		email: 'tasnuva.oshin12@gmail.com',
+	// 		first_name: '',
+	// 		id: '5946ea25-6ae5-42a9-b7b0-140283dd1f5a',
+	// 		is_following: false,
+	// 		last_name: '',
+	// 		phone_number: '',
+	// 		photo_url: 'https://via.placeholder.com/128x128.png?text=T',
+	// 		societies: '',
+	// 		total_followers: 1,
+	// 		total_followings: 0,
+	// 	};
+
 	return (
 		<div className="UserProfile">
 			{isLoading ? (
@@ -243,18 +260,18 @@ function UserProfile() {
 						<BackButton />
 						<UserProfileHeader
 							id={userId}
-							displayName={user.displayName}
-							name={user.name}
+							displayName={user.display_name}
+							name={user.first_name + user.last_name}
 							school={user.school}
-							avatar={user.photoURL}
+							avatar={user.photo_url}
 							background={user.backgroundImage}
 							isTutor={user.isTutor}
 						/>
 					</div>
 					<UserProfileBody
 						posts={userPosts}
-						bio={user.bio}
-						organizations={user.organizations}
+						bio={user.about}
+						organizations={user.societies}
 						classes={userCourses}
 						email={user.email}
 						isTutor={user.isTutor}

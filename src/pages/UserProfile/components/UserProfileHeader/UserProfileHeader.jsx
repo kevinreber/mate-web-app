@@ -6,7 +6,7 @@ function UserProfileHeader({
 	id,
 	displayName = '',
 	name = '',
-	school = '',
+	school = 'U.C. Berkeley',
 	avatar,
 	// avatar = 'https://academist-app-production.s3.amazonaws.com/uploads/user/profile_image/11332/default_user_icon.png',
 	// background = 'https://www.berkeleyside.com/wp-content/uploads/2020/04/1920px-UCBerkeleyCampus-720x468.jpg',
