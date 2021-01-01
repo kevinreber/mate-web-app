@@ -231,12 +231,16 @@ export function googleLogin() {
 
 						// Check if user exists - account will be made for new users.
 						await checkIfUserExists(result.user);
-						db.collection('users')
-							.doc(result.user.uid)
-							.get()
-							.then((doc) => {
-								return dispatch(setCurrUser(doc.data()));
-							});
+						// ! SETTING USER USING DATA FROM NEW API
+						return dispatch(setCurrentUser(userData));
+
+						// ! SETTING USER USING DATA FROM FIREBASE DB
+						// db.collection('users')
+						// 	.doc(result.user.uid)
+						// 	.get()
+						// 	.then((doc) => {
+						// 		return dispatch(setCurrUser(doc.data()));
+						// 	});
 					});
 				})
 				.catch((err) => dispatch(dispatchError(LOGIN_FAIL, err)));
@@ -246,12 +250,14 @@ export function googleLogin() {
 
 export function setCurrentUser(user) {
 	return (dispatch) => {
-		db.collection('users')
-			.doc(user.uid)
-			.get()
-			.then((doc) => {
-				dispatch(setCurrUser(doc.data()));
-			});
+		dispatch(setCurrUser(user));
+		// ! SETTING USER USING DATA FROM FIREBASE DB
+		// db.collection('users')
+		// 	.doc(user.uid)
+		// 	.get()
+		// 	.then((doc) => {
+		// 		dispatch(setCurrUser(doc.data()));
+		// 	});
 	};
 }
 

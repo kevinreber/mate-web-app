@@ -115,8 +115,8 @@ function UserProfile() {
 
 	/** Send New Message to User ****************************************/
 	const messageData = {
-		uid: currentUser.uid,
-		users: [currentUser.uid, userId],
+		uid: currentUser.id,
+		users: [currentUser.id, userId],
 		count: 0,
 		createdAt: createFbTimestamp(),
 		lastUpdatedAt: createFbTimestamp(),
@@ -152,7 +152,7 @@ function UserProfile() {
 
 	/** if User is viewing their own profile, show edit button instead of message button */
 	const DisplayButton =
-		userId !== currentUser.uid ? (
+		userId !== currentUser.id ? (
 			<div onClick={sendMessagePrompt} className="font-italic">
 				<CTAButton text="Send Message" />
 			</div>
