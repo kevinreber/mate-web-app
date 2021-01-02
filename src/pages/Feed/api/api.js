@@ -2,59 +2,44 @@
 import axios from 'axios';
 
 /** Constants */
-import { FEED_URL, FEED_TYPES, BEARER_AUTH_TOKEN } from '../constants/index';
+import {
+	GET,
+	POST,
+	FEED_URL,
+	FEED_TYPES,
+	BEARER_AUTH_TOKEN,
+} from '../constants/index';
 
-export async function getFeed() {
-	// logs token we need to access API
-	console.log(BEARER_AUTH_TOKEN);
-	return axios(FEED_URL, {
-		method: 'GET',
-		headers: {
-			Authorization: BEARER_AUTH_TOKEN,
-			'Content-Type': 'application/json',
-		},
-	})
-		.then((data) => {
-			console.log('Success:', data.data);
-			return data.data.data;
+export class API {
+	static async request(endpoint, req = GET, paramsOrData = {}) {
+		return axios({
+			method: req,
+			url: endpoint,
+			headers: {
+				Authorization: BEARER_AUTH_TOKEN,
+				'Content-Type': 'application/json',
+			},
+			[req === GET ? 'params' : 'data']: paramsOrData,
 		})
-		.catch((error) => {
-			console.error('Error:', error);
-		});
-}
+			.then((resp) => {
+				console.log('Success: ', resp.data);
+				return resp.data.data;
+			})
+			.catch((err) => {
+				console.error('API Error: ', err);
+				return err;
+			});
+	}
 
-export async function postFeed(data) {
-	console.log(data);
-	return axios(FEED_URL, {
-		method: 'POST',
-		headers: {
-			Authorization: BEARER_AUTH_TOKEN,
-		},
-		data,
-	})
-		.then((data) => {
-			console.log('Success:', data.data);
-			return data.data;
-		})
-		.catch((error) => {
-			console.error('Error:', error);
-		});
-}
+	static async getFeed() {
+		return this.request(FEED_URL);
+	}
 
-export async function getFeedTypes() {
-	return fetch(FEED_TYPES, {
-		method: 'GET',
-		headers: {
-			Authorization: BEARER_AUTH_TOKEN,
-			'Content-Type': 'application/json',
-		},
-	})
-		.then((response) => response.json())
-		.then((data) => {
-			console.log('Success:', data.data);
-			return data.data;
-		})
-		.catch((error) => {
-			console.error('Error:', error);
-		});
+	static async postFeed(data) {
+		return this.request(FEED_URL, POST, data);
+	}
+
+	static async getFeedTypes(data) {
+		return this.request(FEED_TYPES, GET, data);
+	}
 }

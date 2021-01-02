@@ -51,6 +51,8 @@ export const CONFIRM = {
 
 /** API Information */
 const BASE_URL = process.env.REACT_APP_BASE_URL;
+export const GET = 'GET';
+export const POST = 'POST';
 export const FEED_URL = `${BASE_URL}/feeds`;
 export const FEED_TYPES = `${FEED_URL}/types`;
 export const BEARER_AUTH_TOKEN = localStorage.getItem('bearerAuthToken');

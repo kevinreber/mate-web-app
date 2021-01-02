@@ -15,7 +15,7 @@ import {
 	editPostInFB,
 } from '../../store/actions/posts';
 import { addFlashMessage } from '../../store/actions/flashMessages';
-import { getFeed, postFeed } from './api/api';
+import { API } from './api/api';
 import { FB, MESSAGE, CONFIRM } from './constants/index';
 import db from '../../config/fbConfig';
 import './Feed.css';
@@ -44,7 +44,7 @@ function Feed() {
 	useEffect(() => {
 		// get data from 'feed' collection
 		const getData = async () => {
-			await getFeed()
+			await API.getFeed()
 				.then((data) => setPosts(data.feeds))
 				.catch((err) => 'Error:' + console.log(err))
 				.finally(() =>
@@ -64,7 +64,7 @@ function Feed() {
 
 	const addPost = async (postData) => {
 		// dispatch(addPostToFB(postData));
-		await postFeed(postData);
+		await API.postFeed(postData);
 		setShowForm(false);
 		dispatch(
 			addFlashMessage({
