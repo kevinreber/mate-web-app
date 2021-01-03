@@ -36,6 +36,7 @@ function Connect() {
 	const [showForm, setShowForm] = useState(false);
 	const toggleForm = () => setShowForm((show) => !show);
 
+	// ! TEMPORARY while testing
 	const currentUser = {
 		uid: '0771401d-f6a2-4c1a-8965-81b889959437',
 	};
