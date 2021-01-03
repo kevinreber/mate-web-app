@@ -20,14 +20,8 @@ function StudyGroupList({ studyGroups = [] }) {
 					<tbody>
 						<tr>
 							<td className="mate-text-secondary Course-Name">
-								{studyGroup.data.title}
-
-								{/* {`${department} ${number}`} <br />
-								<span className='mate-text-secondary Course-Card-Term pt-1 pb-2'>
-									{term}
-								</span> */}
+								{studyGroup.name}
 							</td>
-							{/* <td className='pl-3 Course-Title'>{title}</td> */}
 						</tr>
 					</tbody>
 				</table>
