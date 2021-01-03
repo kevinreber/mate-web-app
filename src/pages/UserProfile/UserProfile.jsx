@@ -15,7 +15,7 @@ import Modal from '../../components/Modal/Modal';
 import createFbTimestamp from '../../utils/createFbTimestamp';
 import { addFlashMessage } from '../../store/actions/flashMessages';
 import { deleteAccount } from '../../store/actions/auth';
-import { API, getUserData } from './api/api';
+import { API } from './api/api';
 import createNewMessage from '../../utils/createNewMessage';
 import { FB, MESSAGE, CONFIRM } from './constants/index';
 import './UserProfile.css';
@@ -113,6 +113,16 @@ function UserProfile() {
 	}, [userId, dispatch, history]);
 	const toggleEditProfile = () => setEditProfile((edit) => !edit);
 
+	const setFlashMessage = (message, type) => {
+		dispatch(
+			addFlashMessage({
+				isOpen: true,
+				message,
+				type,
+			})
+		);
+	};
+
 	/** Send New Message to User ****************************************/
 	const messageData = {
 		uid: currentUser.id,
@@ -140,13 +150,7 @@ function UserProfile() {
 
 		// push user to message
 		history.push(`/messages/${messageId}`);
-		dispatch(
-			addFlashMessage({
-				isOpen: true,
-				message: MESSAGE.sentMessage,
-				type: MESSAGE.success,
-			})
-		);
+		setFlashMessage(MESSAGE.sentMessage, MESSAGE.success);
 	};
 	/******************************************************************* */
 
@@ -170,13 +174,7 @@ function UserProfile() {
 
 	const saveEdits = (data) => {
 		updateUserData(data);
-		dispatch(
-			addFlashMessage({
-				isOpen: true,
-				message: MESSAGE.updateAccount,
-				type: MESSAGE.success,
-			})
-		);
+		setFlashMessage(MESSAGE.updateAccount, MESSAGE.success);
 		toggleEditProfile();
 	};
 
@@ -184,7 +182,11 @@ function UserProfile() {
 	const followUser = async (id) => {
 		return API.followUser(id)
 			.then((resp) => {
-				console.log('Success: ', resp);
+				// prompt error status style, if user already following user
+				const status = resp.message.includes('already')
+					? MESSAGE.error
+					: MESSAGE.success;
+				setFlashMessage(resp.message, status);
 			})
 			.catch((err) => {
 				console.error('Error: ', err);
@@ -194,7 +196,7 @@ function UserProfile() {
 	const unFollowUser = async (id) => {
 		return API.unFollowUser(id)
 			.then((resp) => {
-				console.log('Success: ', resp);
+				setFlashMessage(resp.message, MESSAGE.success);
 			})
 			.catch((err) => {
 				console.error('Error: ', err);
@@ -221,13 +223,7 @@ function UserProfile() {
 		});
 
 		dispatch(deleteAccount(userId));
-		dispatch(
-			addFlashMessage({
-				isOpen: true,
-				message: MESSAGE.deleteAccount,
-				type: MESSAGE.error,
-			})
-		);
+		setFlashMessage(MESSAGE.deleteAccount, MESSAGE.error);
 	};
 	/****************************************************/
 
@@ -247,23 +243,6 @@ function UserProfile() {
 			/>
 		);
 	}
-
-	// 'Success - Other User:',
-	// 	{
-	// 		about: '',
-	// 		achievements: '',
-	// 		display_name: 'TasnuvaOshin',
-	// 		email: 'tasnuva.oshin12@gmail.com',
-	// 		first_name: '',
-	// 		id: '5946ea25-6ae5-42a9-b7b0-140283dd1f5a',
-	// 		is_following: false,
-	// 		last_name: '',
-	// 		phone_number: '',
-	// 		photo_url: 'https://via.placeholder.com/128x128.png?text=T',
-	// 		societies: '',
-	// 		total_followers: 1,
-	// 		total_followings: 0,
-	// 	};
 
 	return (
 		<div className="UserProfile">
