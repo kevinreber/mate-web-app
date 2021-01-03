@@ -1,5 +1,6 @@
 /** Dependencies */
 import React from 'react';
+import { useSelector } from 'react-redux';
 
 /** Header for User Profile */
 function UserProfileHeader({
@@ -20,6 +21,8 @@ function UserProfileHeader({
 	const headerStyle = {
 		backgroundImage: 'url(' + background + ')',
 	};
+
+	const currentUser = useSelector((state) => state.auth.user);
 
 	/**
 	 * ! Will check user.id if profile page is bookmarked or being followed
@@ -53,11 +56,13 @@ function UserProfileHeader({
 							<i className="fas fa-share-alt"></i>
 						</div>
 					</div>
-					<div>
-						{/* TEMPORARY BUTTONS FOR TESTING API */}
-						<button onClick={() => followUser(id)}>Follow</button>
-						<button onClick={() => unFollowUser(id)}>Unfollow</button>
-					</div>
+					{currentUser.uid !== id ? (
+						<div>
+							{/* TEMPORARY BUTTONS FOR TESTING API */}
+							<button onClick={() => followUser(id)}>Follow</button>
+							<button onClick={() => unFollowUser(id)}>Unfollow</button>
+						</div>
+					) : null}
 				</div>
 			</div>
 		</>
