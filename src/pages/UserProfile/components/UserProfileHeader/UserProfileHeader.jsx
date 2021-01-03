@@ -11,6 +11,8 @@ function UserProfileHeader({
 	// avatar = 'https://academist-app-production.s3.amazonaws.com/uploads/user/profile_image/11332/default_user_icon.png',
 	// background = 'https://www.berkeleyside.com/wp-content/uploads/2020/04/1920px-UCBerkeleyCampus-720x468.jpg',
 	isTutor = false,
+	followUser,
+	unFollowUser,
 }) {
 	const background =
 		'https://www.berkeleyside.com/wp-content/uploads/2020/04/1920px-UCBerkeleyCampus-720x468.jpg';
@@ -50,6 +52,11 @@ function UserProfileHeader({
 							<i className={followStatus}></i>
 							<i className="fas fa-share-alt"></i>
 						</div>
+					</div>
+					<div>
+						{/* TEMPORARY BUTTONS FOR TESTING API */}
+						<button onClick={() => followUser(id)}>Follow</button>
+						<button onClick={() => unFollowUser(id)}>Unfollow</button>
 					</div>
 				</div>
 			</div>

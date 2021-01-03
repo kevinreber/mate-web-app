@@ -26,6 +26,8 @@ export const CONFIRM = {
 
 /** API Information */
 const BASE_URL = process.env.REACT_APP_BASE_URL || null;
+export const GET = 'GET';
+export const POST = 'POST';
 export const USERS = `${BASE_URL}/users`;
 export const FOLLOW_USER = `${BASE_URL}/follow`;
 export const UNFOLLOW_USER = `${BASE_URL}/unfollow`;

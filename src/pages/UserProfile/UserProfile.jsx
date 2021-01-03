@@ -15,7 +15,7 @@ import Modal from '../../components/Modal/Modal';
 import createFbTimestamp from '../../utils/createFbTimestamp';
 import { addFlashMessage } from '../../store/actions/flashMessages';
 import { deleteAccount } from '../../store/actions/auth';
-import { getUserData } from './api/api';
+import { API, getUserData } from './api/api';
 import createNewMessage from '../../utils/createNewMessage';
 import { FB, MESSAGE, CONFIRM } from './constants/index';
 import './UserProfile.css';
@@ -99,7 +99,7 @@ function UserProfile() {
 			// 			);
 			// 		})
 			// 		.catch((err) => console.log(err));
-			await getUserData(userId)
+			await API.getUserData(userId)
 				.then((data) => setUser(data.data))
 				.catch((err) => 'Error:' + console.log(err))
 				.finally(() =>
@@ -178,6 +178,27 @@ function UserProfile() {
 			})
 		);
 		toggleEditProfile();
+	};
+
+	/** FOLLOWINGS ****************************/
+	const followUser = async (id) => {
+		return API.followUser(id)
+			.then((resp) => {
+				console.log('Success: ', resp);
+			})
+			.catch((err) => {
+				console.error('Error: ', err);
+			});
+	};
+
+	const unFollowUser = async (id) => {
+		return API.unFollowUser(id)
+			.then((resp) => {
+				console.log('Success: ', resp);
+			})
+			.catch((err) => {
+				console.error('Error: ', err);
+			});
 	};
 
 	/** User Deletes Account ****************************/
@@ -266,6 +287,8 @@ function UserProfile() {
 							avatar={user.photo_url}
 							background={user.backgroundImage}
 							isTutor={user.isTutor}
+							followUser={followUser}
+							unFollowUser={unFollowUser}
 						/>
 					</div>
 					<UserProfileBody
