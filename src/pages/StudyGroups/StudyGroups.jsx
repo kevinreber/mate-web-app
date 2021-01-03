@@ -15,6 +15,7 @@ import StudyGroupForm from './components/StudyGroupForm/StudyGroupForm';
 /** Helpers */
 import { addFlashMessage } from '../../store/actions/flashMessages';
 import createNewMessage from '../../utils/createNewMessage';
+import { API } from './api/api';
 import { FB, MESSAGE } from './constants/index';
 import db from '../../config/fbConfig';
 import './StudyGroups.css';
@@ -24,26 +25,38 @@ function Connect() {
 	const history = useHistory();
 	const dispatch = useDispatch();
 
-	const currentUser = useSelector((state) => state.auth.user);
+	// const currentUser = useSelector((state) => state.auth.user);
 
 	const [userStudyGroups, setUserStudyGroups] = useState([]);
 	const [allStudyGroups, setAllStudyGroups] = useState([]);
 	const [filter, setFilter] = useState('');
 	const [isLoading, setIsLoading] = useState(true);
+	const [getUserStudyGroups, setGetUserStudyGroups] = useState(false);
 
 	const [showForm, setShowForm] = useState(false);
 	const toggleForm = () => setShowForm((show) => !show);
 
+	const currentUser = {
+		uid: '0771401d-f6a2-4c1a-8965-81b889959437',
+	};
+
 	useEffect(() => {
-		const getData = () => {
-			db.collection(FB.collection).onSnapshot((snapshot) =>
-				setAllStudyGroups(
-					snapshot.docs.map((doc) => ({
-						id: doc.id,
-						data: doc.data(),
-					}))
-				)
-			);
+		const getData = async () => {
+			// db.collection(FB.collection).onSnapshot((snapshot) =>
+			// 	setAllStudyGroups(
+			// 		snapshot.docs.map((doc) => ({
+			// 			id: doc.id,
+			// 			data: doc.data(),
+			// 		}))
+			// 	)
+			// );
+			await API.getAllStudyGroups()
+				.then((data) => setAllStudyGroups(data.data.study_groups))
+				.catch((err) => 'Error:' + console.log(err))
+				.finally(() => {
+					setIsLoading(false);
+					setGetUserStudyGroups(true);
+				});
 		};
 		if (isLoading) {
 			getData();
@@ -51,15 +64,17 @@ function Connect() {
 	}, [isLoading]);
 
 	useEffect(() => {
-		if (allStudyGroups.length > 0 && isLoading) {
+		if (getUserStudyGroups) {
 			// Filter which Study Groups user is currently in
-			const studyGroups = allStudyGroups.filter((studyGroup) =>
-				studyGroup.data.usersList.includes(currentUser.uid)
-			);
+			const studyGroups = allStudyGroups.filter((studyGroup) => {
+				return studyGroup.members.filter(
+					(member) => member.id === currentUser.uid
+				);
+			});
 			setUserStudyGroups(studyGroups);
 			setIsLoading(false);
 		}
-	}, [allStudyGroups, currentUser.uid, isLoading]);
+	}, [allStudyGroups, currentUser.uid, getUserStudyGroups]);
 
 	let List;
 
