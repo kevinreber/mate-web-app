@@ -29,13 +29,19 @@ function AutocompleteStudyGroups({
 	useEffect(() => {
 		// Filter all public study groups
 		const publicStudyGroups = options.filter(
-			(studyGroup) => !studyGroup.data.private
+			(studyGroup) => !studyGroup.is_private
 		);
 
 		// Filter which Study Groups user is not currently in
-		const studyGroupOptions = publicStudyGroups.filter(
-			(studyGroup) => !studyGroup.data.usersList.includes(currentUser.uid)
-		);
+		// const studyGroupOptions = publicStudyGroups.filter(
+		// 	(studyGroup) => !studyGroup.data.usersList.includes(currentUser.uid)
+		// );
+
+		const studyGroupOptions = publicStudyGroups.filter((studyGroup) => {
+			return studyGroup.members.filter(
+				(member) => member.id !== currentUser.uid
+			);
+		});
 
 		setStudyGroupChoices(studyGroupOptions);
 	}, [options, currentUser]);
