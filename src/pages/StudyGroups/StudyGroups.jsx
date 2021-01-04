@@ -109,16 +109,20 @@ function StudyGroups() {
 
 	const addStudyGroup = async (data) => {
 		// store studyGroupId given back
-		const newStudyGroupId = await createNewMessage(
-			FB.collection,
-			data,
-			null,
-			null,
-			currentUser
-		);
-
+		// const newStudyGroupId = await createNewMessage(
+		// 	FB.collection,
+		// 	data,
+		// 	null,
+		// 	null,
+		// 	currentUser
+		// );
+		console.log(data);
+		await API.createStudyGroup(data)
+			.then((resp) => console.log(resp))
+			.catch((err) => console.log(err));
+		setShowForm(false);
 		// push user to message
-		history.push(`/study-groups/${newStudyGroupId}`);
+		// history.push(`/study-groups/${newStudyGroupId}`);
 		setFlashMessage(MESSAGE.studyGroupCreated, MESSAGE.success);
 	};
 

@@ -27,17 +27,22 @@ function StudyGroupForm({ save, studyGroups, user }) {
 
 	// ! NEED TO MATCH NEW DB SCHEMA
 	// ! WHEN MAKING NEW STUDY GROUP
+	// ? is_private SHOULD BE INTEGER NOT BOOL?
 	// Form Data
 	const INITIAL_STATE = {
-		active: true,
-		private: false,
-		admin: [uid],
-		usersList: [uid],
-		count: 0,
-		maxUsers: null,
-		title: '',
-		createdAt: createFbTimestamp(),
-		lastUpdatedAt: createFbTimestamp(),
+		// active: true,
+		// private: false,
+		// admin: [uid],
+		// usersList: [uid],
+		// count: 0,
+		// maxUsers: null,
+		// title: '',
+		// createdAt: createFbTimestamp(),
+		// lastUpdatedAt: createFbTimestamp(),
+		name: '',
+		description: '',
+		max_students: null,
+		is_private: false,
 	};
 
 	const SEARCH_INITIAL_STATE = {
@@ -64,10 +69,10 @@ function StudyGroupForm({ save, studyGroups, user }) {
 	const handleChange = (e) => {
 		// handle checkbox
 		if (e.target.type === 'checkbox') {
-			console.log(formData.private);
+			console.log(formData.is_private);
 			setFormData((fData) => ({
 				...fData,
-				private: !fData.private,
+				is_private: !fData.is_private,
 			}));
 		} else {
 			let { name, value } = !e.target.dataset.name
@@ -144,29 +149,29 @@ function StudyGroupForm({ save, studyGroups, user }) {
 	const validateFormData = () => {
 		/** Clear any existing errors */
 		setErrors('');
-		if (!formData.title) {
+		if (!formData.name) {
 			setErrors('*Required');
 			return false;
 		}
 
-		/** if maxUsers, verify it is an integer
-		 * else change set maxUsers to null
+		/** if max_students, verify it is an integer
+		 * else change set max_students to null
 		 */
-		if (formData.maxUsers) {
-			if (!Number.isInteger(parseInt(formData.maxUsers))) {
+		if (formData.max_students) {
+			if (!Number.isInteger(parseInt(formData.max_students))) {
 				resetFormData();
 				setErrors('*Number must be an Integer');
 				return false;
 			} else {
 				setFormData((fData) => ({
 					...fData,
-					maxUsers: parseInt(fData.maxUsers),
+					max_students: parseInt(fData.max_students),
 				}));
 			}
 		} else {
 			setFormData((fData) => ({
 				...fData,
-				maxUsers: null,
+				max_students: null,
 			}));
 		}
 		return true;
@@ -203,38 +208,57 @@ function StudyGroupForm({ save, studyGroups, user }) {
 			<div className="StudyGroupForm__Create">
 				<h4>Create Study Group</h4>
 				<form className="container mb-3" onSubmit={handleSubmit}>
-					<label htmlFor="title" className="float-left">
-						Title*
+					<label htmlFor="name" className="float-left">
+						Name*
 					</label>
 					<input
-						id="title"
+						id="name"
 						className="form-control mate-form-input mb-3"
 						type="text"
 						onChange={handleChange}
-						name="title"
-						value={formData.title}
+						name="name"
+						value={formData.name}
 						maxLength="30"
 						required
 					/>
 					<small
 						className={`char-count ${
-							30 - formData.title.length <= 10 ? 'error-limit' : ''
+							30 - formData.name.length <= 10 ? 'error-limit' : ''
 						}`}>
-						{30 - formData.title.length} characters remaining
+						{30 - formData.name.length} characters remaining
+					</small>
+					<label htmlFor="description" className="float-left">
+						Description*
+					</label>
+					<input
+						id="description"
+						className="form-control mate-form-input mb-3"
+						type="text"
+						onChange={handleChange}
+						name="description"
+						value={formData.description}
+						maxLength="50"
+						required
+					/>
+					<small
+						className={`char-count ${
+							50 - formData.description.length <= 10 ? 'error-limit' : ''
+						}`}>
+						{50 - formData.description.length} characters remaining
 					</small>
 					<div className="StudyGroupForm__Bottom">
 						<div className="form-group max-users">
 							<label htmlFor="max" className="float-left">
-								Max Users
+								Max Students*
 							</label>
 							<input
 								id="max"
 								className="form-control mate-form-input"
 								type="number"
 								onChange={handleChange}
-								name="maxUsers"
-								// step="1"
-								value={formData.maxUsers}
+								name="max_students"
+								value={formData.max_students}
+								required
 							/>
 						</div>
 						<div className="form-group form-check">
@@ -245,7 +269,7 @@ function StudyGroupForm({ save, studyGroups, user }) {
 								type="checkbox"
 								onChange={handleChange}
 								name="private"
-								value={formData.private}
+								value={formData.is_private}
 							/>
 							{/* <FormControlLabel
 							control={
