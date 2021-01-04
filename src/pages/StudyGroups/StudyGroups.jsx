@@ -97,6 +97,16 @@ function StudyGroups() {
 		List = <StudyGroupList studyGroups={userStudyGroups} />;
 	}
 
+	const setFlashMessage = (message, type) => {
+		dispatch(
+			addFlashMessage({
+				isOpen: true,
+				message,
+				type,
+			})
+		);
+	};
+
 	const addStudyGroup = async (data) => {
 		// store studyGroupId given back
 		const newStudyGroupId = await createNewMessage(
@@ -109,13 +119,7 @@ function StudyGroups() {
 
 		// push user to message
 		history.push(`/study-groups/${newStudyGroupId}`);
-		dispatch(
-			addFlashMessage({
-				isOpen: true,
-				message: MESSAGE.studyGroupCreated,
-				type: MESSAGE.success,
-			})
-		);
+		setFlashMessage(MESSAGE.studyGroupCreated, MESSAGE.success);
 	};
 
 	if (showForm) {
