@@ -10,43 +10,28 @@ import Notification from './components/Notification/Notification';
 import SubModal from './components/SubModal/SubModal';
 import Routes from './routes/Routes';
 import { setCurrentUser } from './store/actions/auth';
-import { auth } from './config/fbConfig';
+import { API } from '../src/pages/UserProfile/api/api';
 import './App.css';
 
 function App() {
 	const dispatch = useDispatch();
-
 	const BEARER_AUTH_TOKEN = localStorage.getItem('bearerAuthToken');
-	if (BEARER_AUTH_TOKEN) {
-		// * WIP: Handle BEARER_AUTH_TOKEN
-		// * when decoded, receive object below
-		// {
-		// exp: 1609801069;
-		// iat: 1609541869;
-		// iss: 'https://api.mateapp.us/api/login';
-		// jti: 'mqBuCjtIM8PP4Gx0';
-		// nbf: 1609541869;
-		// prv: '23bd5c8949f600adb39e701c400872db7a5976f7';
-		// sub: '4';
-		// uuid: '0771401d-f6a2-4c1a-8965-81b889959437';
-		// }
-		let test = jwt_decode(BEARER_AUTH_TOKEN);
-		console.log(BEARER_AUTH_TOKEN, test);
-	}
 
 	useEffect(() => {
-		function getCurrentUser() {
+		async function getCurrentUser() {
+			const token = jwt_decode(BEARER_AUTH_TOKEN);
+			console.log(BEARER_AUTH_TOKEN, token);
+			const user = await API.getUserData(token.uuid);
+
 			// check if user is logged in
-			auth.onAuthStateChanged((user) => {
-				if (user) {
-					dispatch(setCurrentUser(user));
-				} else {
-					console.log('no user');
-				}
-			});
+			if (user) {
+				dispatch(setCurrentUser(user.data));
+			} else {
+				console.log('no user');
+			}
 		}
 		getCurrentUser();
-	}, [dispatch]);
+	}, [dispatch, BEARER_AUTH_TOKEN]);
 
 	const currentUser = useSelector((state) => state.auth.user);
 	const modal = useSelector((state) => state.modal);
