@@ -69,6 +69,18 @@ function PostForm({ save }) {
 		// setCoordinates(latLng);
 	};
 
+	// const convertBase64 = (file) => {
+	// 	const reader = new FileReader();
+	// 	reader.readAsDataURL(file);
+	// 	reader.onload = () => {
+	// 		const base64 = reader.result;
+
+	// 	};
+	// 	    reader.onerror = (err) => {
+	// 				console.log('Error: ', err);
+	// 			};
+	// };
+
 	/** Update state in formData */
 	const handleChange = (e) => {
 		// Reset errors each change
@@ -78,11 +90,36 @@ function PostForm({ save }) {
 			resetAttachment();
 			const file = e.target.files[0];
 
+			// ! Post - Media File Structure
+			// media: Array(1)
+			// 0: {url: "https://api.mateapp.us/storage/46/conversions/8b20…-4cd0-a39a-70c5dfe7cfd35fc3a3886ef6c-feed_640.jpg"}
+			// length: 1
+
 			/** Validates attachment and prompts error */
 			if (fileIsImage(file, setErrors)) {
-				setFormData((fData) => {
-					return { ...fData, media: URL.createObjectURL(file) };
-				});
+				// ! TODO: Create base64 image file
+				const reader = new FileReader();
+				reader.readAsDataURL(file);
+				reader.onload = () => {
+					const base64 = reader.result;
+					setFormData((fData) => {
+						return { ...fData, media: [{ url: base64 }] };
+					});
+				};
+				reader.onerror = (err) => {
+					console.log('Error: ', err);
+				};
+
+				// const file64 = convertBase64(file);
+				// console.log(file64.result);
+				// setFormData((fData) => {
+				// 	return { ...fData, media: [{ url: file64 }] };
+				// });
+
+				// setFormData((fData) => {
+				// 	return { ...fData, media: URL.createObjectURL(file) };
+				// });
+
 				setImage((data) => ({
 					...data,
 					attachment_preview: URL.createObjectURL(file),
@@ -118,17 +155,16 @@ function PostForm({ save }) {
 	 */
 	const resetAttachment = (removeUrl = false) => {
 		if (removeUrl) {
-			const storageRef = storage.ref();
-			const storageImage = storageRef.child(`feed/${user.id}/${image.name}`);
-
-			storageImage
-				.delete()
-				.then(() => {
-					console.log('Removed image');
-				})
-				.catch((err) => {
-					console.log(err);
-				});
+			// const storageRef = storage.ref();
+			// const storageImage = storageRef.child(`feed/${user.id}/${image.name}`);
+			// storageImage
+			// 	.delete()
+			// 	.then(() => {
+			// 		console.log('Removed image');
+			// 	})
+			// 	.catch((err) => {
+			// 		console.log(err);
+			// 	});
 		}
 		setImage(INITIAL_STATE_IMAGE);
 		setProgressBar(0);
