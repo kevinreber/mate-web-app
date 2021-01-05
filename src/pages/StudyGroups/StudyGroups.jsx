@@ -118,12 +118,12 @@ function StudyGroups() {
 		// );
 		console.log(data);
 		await API.createStudyGroup(data)
-			.then((resp) => console.log(resp))
+			.then((resp) => setFlashMessage(resp.message, MESSAGE.success))
 			.catch((err) => console.log(err));
 		setShowForm(false);
 		// push user to message
 		// history.push(`/study-groups/${newStudyGroupId}`);
-		setFlashMessage(MESSAGE.studyGroupCreated, MESSAGE.success);
+		// setFlashMessage(MESSAGE.studyGroupCreated, MESSAGE.success);
 	};
 
 	if (showForm) {
