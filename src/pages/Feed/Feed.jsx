@@ -62,19 +62,29 @@ function Feed() {
 	const [showForm, setShowForm] = useState(false);
 	const toggleForm = () => setShowForm((show) => !show);
 
-	const addPost = async (postData) => {
-		// dispatch(addPostToFB(postData));
-		await API.postFeed(postData);
-		setShowForm(false);
+	const setFlashMessage = (message, type) => {
 		dispatch(
 			addFlashMessage({
 				isOpen: true,
-				message: MESSAGE.addPost,
-				type: MESSAGE.success,
+				message: message,
+				type: type,
 			})
 		);
-		// get most recent posts
-		setIsLoading(true);
+	};
+
+	const addPost = async (postData) => {
+		console.log(postData);
+		// dispatch(addPostToFB(postData));
+		await API.postFeed(postData)
+			.then((resp) => console.log(resp))
+			.catch((err) => console.log(err))
+			.finally(() => {
+				setShowForm(false);
+				setFlashMessage(MESSAGE.addPost, MESSAGE.success);
+
+				// get most recent posts
+				setIsLoading(true);
+			});
 	};
 
 	/** Prompts Confirmation Dialog to Delete Post*/
@@ -96,13 +106,8 @@ function Feed() {
 			isOpen: false,
 		});
 		dispatch(deletePostFromFB(id, currentUser.uid, image));
-		dispatch(
-			addFlashMessage({
-				isOpen: true,
-				message: MESSAGE.deletePost,
-				type: MESSAGE.error,
-			})
-		);
+		setFlashMessage(MESSAGE.deletePost, MESSAGE.error);
+
 		// get most recent posts
 		setIsLoading(true);
 	};
@@ -110,13 +115,8 @@ function Feed() {
 	/** Updates Post */
 	const editPost = (id, data) => {
 		dispatch(editPostInFB(id, data));
-		dispatch(
-			addFlashMessage({
-				isOpen: true,
-				message: MESSAGE.updatePost,
-				type: MESSAGE.success,
-			})
-		);
+		setFlashMessage(MESSAGE.updatePost, MESSAGE.success);
+
 		// get most recent posts
 		setIsLoading(true);
 	};
