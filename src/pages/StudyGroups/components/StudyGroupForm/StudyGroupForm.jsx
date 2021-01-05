@@ -41,7 +41,7 @@ function StudyGroupForm({ save, studyGroups, user }) {
 		// lastUpdatedAt: createFbTimestamp(),
 		name: '',
 		description: '',
-		max_students: null,
+		max_students: 0,
 		is_private: false,
 	};
 
@@ -69,7 +69,6 @@ function StudyGroupForm({ save, studyGroups, user }) {
 	const handleChange = (e) => {
 		// handle checkbox
 		if (e.target.type === 'checkbox') {
-			console.log(formData.is_private);
 			setFormData((fData) => ({
 				...fData,
 				is_private: !fData.is_private,
@@ -154,8 +153,26 @@ function StudyGroupForm({ save, studyGroups, user }) {
 			return false;
 		}
 
+		/** is_private must return a 1(private) or 0(not private) */
+		if (formData.is_private) {
+			formData.is_private = 1;
+		} else {
+			formData.is_private = 0;
+		}
+		// if (formData.is_private) {
+		// 	setFormData((fData) => ({
+		// 		...fData,
+		// 		is_private: 1,
+		// 	}));
+		// } else {
+		// 	setFormData((fData) => ({
+		// 		...fData,
+		// 		is_private: 0,
+		// 	}));
+		// }
+
 		/** if max_students, verify it is an integer
-		 * else change set max_students to null
+		 * else change set max_students to 0
 		 */
 		if (formData.max_students) {
 			if (!Number.isInteger(parseInt(formData.max_students))) {
@@ -171,7 +188,7 @@ function StudyGroupForm({ save, studyGroups, user }) {
 		} else {
 			setFormData((fData) => ({
 				...fData,
-				max_students: null,
+				max_students: 0,
 			}));
 		}
 		return true;
