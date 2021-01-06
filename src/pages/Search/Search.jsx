@@ -114,6 +114,16 @@ function Search() {
 		}
 	}, [isLoading, startSearch, search]);
 
+	const setFlashMessage = (message, type = 'success') => {
+		dispatch(
+			addFlashMessage({
+				isOpen: true,
+				message,
+				type,
+			})
+		);
+	};
+
 	/** Prompts Confirmation Dialog to Delete Post*/
 	const deletePostPrompt = (id) => {
 		setConfirmDialog({
@@ -133,25 +143,13 @@ function Search() {
 			isOpen: false,
 		});
 		dispatch(deletePostFromFB(id));
-		dispatch(
-			addFlashMessage({
-				isOpen: true,
-				message: 'Removed Post',
-				type: 'error',
-			})
-		);
+		setFlashMessage('Removed Post', 'error');
 	};
 
 	/** Prompts Modal to edit Post information */
 	const editPost = (id, data) => {
 		dispatch(editPostInFB(id, data));
-		dispatch(
-			addFlashMessage({
-				isOpen: true,
-				message: 'Update Successful!',
-				type: 'success',
-			})
-		);
+		setFlashMessage('Update Successful!');
 		// get most recent posts
 		setIsLoading(true);
 	};
