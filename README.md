@@ -21,9 +21,15 @@
 - [] How to filter feed types
 - [] Do we allow Comments with new API?
 
+### Search
+
+- [] Setup Quick Search
+- [] Setup 'Today' Search
+
 ### Study Groups
 
 - [] Set up API calls
+- [] Leave Study Group
 
 ### Users
 
