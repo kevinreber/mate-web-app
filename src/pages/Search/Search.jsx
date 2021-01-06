@@ -23,8 +23,8 @@ function Search() {
 	const dispatch = useDispatch();
 	const [quickSearch, setQuickSearch] = useState('Today');
 	const toggleQuickSearch = (e) => {
-		setIsLoading(true);
-		setPosts([]);
+		// setIsLoading(true);
+		setFilteredPosts([]);
 		setQuickSearch(e.target.innerText);
 	};
 
@@ -32,7 +32,8 @@ function Search() {
 	const [startSearch, setStartSearch] = useState(false);
 	const [errors, setErrors] = useState('');
 
-	const [posts, setPosts] = useState([]);
+	const [allPosts, setAllPosts] = useState([]);
+	const [filteredPosts, setFilteredPosts] = useState([]);
 	const [isLoading, setIsLoading] = useState(true);
 
 	const [confirmDialog, setConfirmDialog] = useState({
@@ -82,7 +83,7 @@ function Search() {
 			// }
 
 			await API.getFeed()
-				.then((data) => setPosts(data.feeds))
+				.then((data) => setAllPosts(data.feeds))
 				.catch((err) => console.error(err))
 				.finally(() => setIsLoading(false));
 		}
@@ -94,22 +95,28 @@ function Search() {
 	useEffect(() => {
 		// if user uses search bar, filter out posts that match search keywords
 		const searchForPosts = () => {
-			db.collection('feeds')
-				.get()
-				.then((data) => {
-					data.docs.forEach((doc) => {
-						if (doc.data().description.includes(search)) {
-							setPosts((posts) => [...posts, { id: doc.id, data: doc.data() }]);
-						}
-					});
-				})
-				.catch((err) => console.log(err));
+			console.log(search);
+			// db.collection('feeds')
+			// 	.get()
+			// 	.then((data) => {
+			// 		data.docs.forEach((doc) => {
+			// 			if (doc.data().description.includes(search)) {
+			// 				setPosts((posts) => [...posts, { id: doc.id, data: doc.data() }]);
+			// 			}
+			// 		});
+			// 	})
+			// 	.catch((err) => console.log(err));
+			const filteredPosts = allPosts.filter(
+				(p) => p.title.includes(search) || p.description.includes(search)
+			);
+			setFilteredPosts(filteredPosts);
 
-			setIsLoading(false);
+			// setIsLoading(false);
 			setStartSearch(false);
 		};
 
-		if (isLoading && startSearch) {
+		// if (isLoading && startSearch) {
+		if (startSearch) {
 			searchForPosts();
 		}
 	}, [isLoading, startSearch, search]);
@@ -165,9 +172,9 @@ function Search() {
 	const handleSubmit = () => {
 		setErrors('');
 		if (validSearch()) {
-			setPosts([]);
+			setFilteredPosts([]);
 			setQuickSearch('');
-			setIsLoading(true);
+			// setIsLoading(true);
 			setStartSearch(true);
 		}
 	};
@@ -185,10 +192,14 @@ function Search() {
 	));
 
 	const SearchBody =
-		posts.length === 0 && !isLoading ? (
+		allPosts.length === 0 && !isLoading ? (
 			<NoData text={'posts'} />
 		) : (
-			<FeedList posts={posts} remove={deletePostPrompt} edit={editPost} />
+			<FeedList
+				posts={quickSearch === 'Today' ? allPosts : filteredPosts}
+				remove={deletePostPrompt}
+				edit={editPost}
+			/>
 		);
 
 	return (
@@ -205,7 +216,7 @@ function Search() {
 				</div>
 			</div>
 			<div className="Search__List">
-				{isLoading && posts.length === 0 ? <Loader /> : SearchBody}
+				{isLoading && allPosts.length === 0 ? <Loader /> : SearchBody}
 			</div>
 			<div
 				onClick={handleSubmit}
