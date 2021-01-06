@@ -69,10 +69,11 @@ a.nav-link:focus {
 /* Small devices (landscape phones, 576px and up) */
 @media (min-width: 576px) {
 	.NavBar {
-		border-right: 2px solid var(--tertiary-color);
+		border-right: 1px solid var(--tertiary-color);
+		border-top: none;
 		height: 100vh;
 		width: 92px;
-		box-shadow: 0 0 6px 1px rgba(0, 0, 0, 0.6);
+		box-shadow: 0 0 6px 0 rgba(0, 0, 0, 0.4);
 		display: flex;
 		flex-direction: column;
 	}
