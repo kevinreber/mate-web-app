@@ -11,7 +11,8 @@ import ConfirmDialog from '../../components/ConfirmDialog/ConfirmDialog';
 import Loader from '../../components/layout/Loader/Loader';
 import { deletePostFromFB, editPostInFB } from '../../store/actions/posts';
 import { addFlashMessage } from '../../store/actions/flashMessages';
-import { SearchCategories } from './constants/index';
+import { SearchCategories, postTypeOptions } from './constants/index';
+import { API } from './api/api';
 import db from '../../config/fbConfig';
 import './Search.css';
 
@@ -41,45 +42,49 @@ function Search() {
 	});
 
 	useEffect(() => {
-		const nowDate = new Date();
-		function getData() {
+		// const nowDate = new Date();
+		async function getData() {
 			/** if quickSearch is set to 'Today'
 			 * filter through each snapshot and compare timestamps to find posts that were posted
 			 * within 24 hrs
 			 * 86400000 = 24 hrs in milliseconds
 			 */
-			if (quickSearch === 'Today') {
-				db.collection('feeds')
-					.get()
-					.then((data) => {
-						data.docs.forEach((doc) => {
-							if (doc.data().timestamp) {
-								const postDate = doc.data().timestamp.toDate().getTime();
-								if (nowDate - postDate < 86400000) {
-									setPosts((posts) => [
-										...posts,
-										{ id: doc.id, data: doc.data() },
-									]);
-								}
-							}
-						});
-					})
-					.catch((err) => console.log(err));
-			} else {
-				db.collection('feeds')
-					.where('type', '==', quickSearch)
-					.get()
-					.then((data) => {
-						setPosts(
-							data.docs.map((doc) => ({
-								id: doc.id,
-								data: doc.data(),
-							}))
-						);
-					})
-					.catch((err) => console.log(err));
-			}
-			setIsLoading(false);
+			// if (quickSearch === 'Today') {
+			// 	db.collection('feeds')
+			// 		.get()
+			// 		.then((data) => {
+			// 			data.docs.forEach((doc) => {
+			// 				if (doc.data().timestamp) {
+			// 					const postDate = doc.data().timestamp.toDate().getTime();
+			// 					if (nowDate - postDate < 86400000) {
+			// 						setPosts((posts) => [
+			// 							...posts,
+			// 							{ id: doc.id, data: doc.data() },
+			// 						]);
+			// 					}
+			// 				}
+			// 			});
+			// 		})
+			// 		.catch((err) => console.log(err));
+			// } else {
+			// 	db.collection('feeds')
+			// 		.where('type', '==', quickSearch)
+			// 		.get()
+			// 		.then((data) => {
+			// 			setPosts(
+			// 				data.docs.map((doc) => ({
+			// 					id: doc.id,
+			// 					data: doc.data(),
+			// 				}))
+			// 			);
+			// 		})
+			// 		.catch((err) => console.log(err));
+			// }
+
+			await API.getFeed()
+				.then((data) => setPosts(data.feeds))
+				.catch((err) => console.error(err))
+				.finally(() => setIsLoading(false));
 		}
 		if (isLoading && !startSearch) {
 			getData();
