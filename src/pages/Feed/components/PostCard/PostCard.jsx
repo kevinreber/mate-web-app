@@ -1,5 +1,5 @@
 /** Dependencies */
-import React, { useState } from 'react';
+import React, { useState, memo } from 'react';
 import { Link, useHistory } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { PropTypes } from 'prop-types';
@@ -49,271 +49,278 @@ const HOST_URL = 'localhost:3000';
  * @param {function} 	remove				Function to remove post. User will only see if they made post.
  * @param {function} 	edit				Function to edit post. User will only see if they made post.
  */
-function PostCard({
-	id,
-	title,
-	username,
-	userId,
-	avatar,
-	description,
-	location,
-	type,
-	start = null,
-	end = null,
-	attachment_preview = null,
-	attachment = '',
-	attachment_name = '',
-	timestamp,
-	last_updated = null,
-	comments = null,
-	isBookmarked = false,
-	remove,
-	edit,
-}) {
-	const dispatch = useDispatch();
-	const history = useHistory();
-	const currentUser = useSelector((state) => state.auth.user);
+const PostCard = memo(
+	({
+		id,
+		title,
+		username,
+		userId,
+		avatar,
+		description,
+		location,
+		type,
+		start = null,
+		end = null,
+		attachment_preview = null,
+		attachment = '',
+		attachment_name = '',
+		timestamp,
+		last_updated = null,
+		comments = null,
+		isBookmarked = false,
+		remove,
+		edit,
+	}) => {
+		const dispatch = useDispatch();
+		const history = useHistory();
+		const currentUser = useSelector((state) => state.auth.user);
 
-	const [showEditForm, setShowEditForm] = useState(false);
-	const [showMessageForm, setShowMessageForm] = useState(false);
+		const [showEditForm, setShowEditForm] = useState(false);
+		const [showMessageForm, setShowMessageForm] = useState(false);
 
-	/** PopoverActions Props for Admin ***************/
-	const [anchorEl, setAnchorEl] = useState(null);
-	const togglePopover = (e) => {
-		setAnchorEl(e.currentTarget);
-	};
-	const handleClose = () => setAnchorEl(null);
-	const open = Boolean(anchorEl);
-	const popoverId = open ? 'simple-popover' : undefined;
-	/************************************* */
+		/** PopoverActions Props for Admin ***************/
+		const [anchorEl, setAnchorEl] = useState(null);
+		const togglePopover = (e) => {
+			setAnchorEl(e.currentTarget);
+		};
+		const handleClose = () => setAnchorEl(null);
+		const open = Boolean(anchorEl);
+		const popoverId = open ? 'simple-popover' : undefined;
+		/************************************* */
 
-	/** PopoverActions Props for Share Icon***************/
-	const [shareAnchorEl, setShareAnchorEl] = useState(null);
-	const toggleSharePopover = (e) => {
-		setShareAnchorEl(e.currentTarget);
-	};
-	const handleShareClose = () => setShareAnchorEl(null);
-	const openShare = Boolean(shareAnchorEl);
-	const popoverShareId = open ? 'simple-popover' : undefined;
-	/************************************* */
+		/** PopoverActions Props for Share Icon***************/
+		const [shareAnchorEl, setShareAnchorEl] = useState(null);
+		const toggleSharePopover = (e) => {
+			setShareAnchorEl(e.currentTarget);
+		};
+		const handleShareClose = () => setShareAnchorEl(null);
+		const openShare = Boolean(shareAnchorEl);
+		const popoverShareId = open ? 'simple-popover' : undefined;
+		/************************************* */
 
-	/** converts time */
-	const convertTime = (time) => {
-		return moment(time.toDate()).calendar();
-	};
+		/** converts time */
+		const convertTime = (time) => {
+			return moment(time.toDate()).calendar();
+		};
 
-	const toggleEditForm = () => {
-		// close popovers
-		handleClose();
-		handleShareClose();
+		const toggleEditForm = () => {
+			// close popovers
+			handleClose();
+			handleShareClose();
 
-		/** Close Grade Modal */
-		dispatch(
-			showModalContent({
-				isOpen: false,
-				content: null,
-			})
-		);
-		setShowEditForm((show) => !show);
-	};
-
-	const eventTime =
-		start && end ? (
-			<>
-				<p className="event__time">
-					Start: <span className="event__timestamp"> {convertTime(start)}</span>
-				</p>
-				<p className="event__time">
-					Ends: <span className="event__timestamp"> {convertTime(end)}</span>
-				</p>
-			</>
-		) : null;
-
-	const showAttachment =
-		attachment !== [] ? (
-			<img
-				className="Post-Card__Attachment"
-				src={attachment.url}
-				alt={attachment_name}
-			/>
-		) : null;
-
-	const deletePost = () => {
-		remove(id, attachment_name);
-	};
-
-	/** Edit Post Form **************************/
-	// Updates edited post's data
-	const editPost = (data) => {
-		edit(id, data);
-		// close popover and edit form
-		toggleEditForm();
-	};
-
-	if (showEditForm) {
-		dispatch(
-			showModalContent({
-				isOpen: true,
-				content: (
-					<EditPostForm
-						save={editPost}
-						userId={userId}
-						username={username}
-						avatar={avatar}
-						title={title}
-						description={description}
-						location={location}
-						type={type}
-						start={start}
-						end={end}
-						attachment_preview={attachment_preview}
-						attachment={attachment}
-						attachment_name={attachment_name}
-						timestamp={timestamp}
-						comments={comments}
-					/>
-				),
-				full: true,
-			})
-		);
-	}
-	/******************************************** */
-
-	/** Forward Post as Message Form **************/
-	const toggleMessageForm = () => {
-		setShowMessageForm((show) => !show);
-	};
-
-	const sendMessage = async (messageData, chatData) => {
-		// store messageId given back
-		const messageId = await createNewMessage(
-			'messages',
-			messageData,
-			'chats',
-			chatData
-		);
-
-		// push user to message
-		history.push(`/messages/${messageId}`);
-		dispatch(
-			addFlashMessage({
-				isOpen: true,
-				message: 'Message Sent!',
-				type: 'success',
-			})
-		);
-	};
-
-	// Form to forward post to another User as a message
-	if (showMessageForm) {
-		return (
-			<Modal
-				isOpen={showMessageForm}
-				content={
-					<NewMessageForm
-						send={sendMessage}
-						content={`Check out this post at ${HOST_URL}/post/${id}!`}
-						showAllUsers={true}
-					/>
-				}
-				closeModal={toggleMessageForm}
-			/>
-		);
-	}
-	/******************************************** */
-
-	// Copies link of post to browser clipboard
-	const shareLink = () => {
-		try {
-			copyLinkToClipBoard(`/post/${id}`);
-			/** Prompt change made */
+			/** Close Grade Modal */
 			dispatch(
-				addFlashMessage({
-					isOpen: true,
-					message: 'Copied to Clipboard!',
-					type: 'success',
+				showModalContent({
+					isOpen: false,
+					content: null,
 				})
 			);
-		} catch (err) {
-			/** Prompt change made */
+			setShowEditForm((show) => !show);
+		};
+
+		const eventTime =
+			start && end ? (
+				<>
+					<p className="event__time">
+						Start:{' '}
+						<span className="event__timestamp"> {convertTime(start)}</span>
+					</p>
+					<p className="event__time">
+						Ends: <span className="event__timestamp"> {convertTime(end)}</span>
+					</p>
+				</>
+			) : null;
+
+		const showAttachment =
+			attachment !== [] ? (
+				<img
+					className="Post-Card__Attachment"
+					src={attachment.url}
+					alt={attachment_name}
+				/>
+			) : null;
+
+		const deletePost = () => {
+			remove(id, attachment_name);
+		};
+
+		/** Edit Post Form **************************/
+		// Updates edited post's data
+		const editPost = (data) => {
+			edit(id, data);
+			// close popover and edit form
+			toggleEditForm();
+		};
+
+		if (showEditForm) {
 			dispatch(
-				addFlashMessage({
+				showModalContent({
 					isOpen: true,
-					message: 'Error!',
-					type: 'danger',
+					content: (
+						<EditPostForm
+							save={editPost}
+							userId={userId}
+							username={username}
+							avatar={avatar}
+							title={title}
+							description={description}
+							location={location}
+							type={type}
+							start={start}
+							end={end}
+							attachment_preview={attachment_preview}
+							attachment={attachment}
+							attachment_name={attachment_name}
+							timestamp={timestamp}
+							comments={comments}
+						/>
+					),
+					full: true,
 				})
 			);
 		}
-		// close share popover after copy to clipboard
-		handleShareClose();
-	};
+		/******************************************** */
 
-	return (
-		<div id={id} className="Post-Card">
-			<div className="Post-Card__Main">
-				<div className="Post-Card__Left">
-					<Link to={`/users/${userId}`}>
-						<Avatar alt={username} src={avatar} />
-					</Link>
-				</div>
-				<div className="Post-Card__Center">
-					<Link to={`/post/${id}`}>
-						<div className="Post-Card__Header">
-							<h5>{title}</h5>
-							<div className="Post-Card__Sub-Header">
-								<span className="mate-text-secondary username">{username}</span>
-								<span className="mate-text-secondary edited">
-									{last_updated && timestamp !== last_updated ? '(Edited)' : ''}
-								</span>
-							</div>
-						</div>
-						<div className="Post-Card__Body mate-text-secondary">
-							<p className="description">{description}</p>
-							{showAttachment}
-							<span className="location">
-								<LocationOnIcon />
-								{location}
-							</span>
-							<span>{eventTime}</span>
-						</div>
-					</Link>
-				</div>
-			</div>
-			<div className="Post-Card__Footer">
-				<PostCardFooter
-					id={id}
-					comments={comments}
-					isBookmarked={isBookmarked}
-					toggleMessageForm={toggleMessageForm}
-					toggleSharePopover={toggleSharePopover}
-					shareId={popoverShareId}
-					open={openShare}
-					anchorEl={shareAnchorEl}
-					close={handleShareClose}
-					shareLink={shareLink}
-				/>
-			</div>
-			<div className="Post-Card__Right Post__timestamp">
-				<p>{timestamp}</p>
-				{currentUser.uid === userId ? (
-					<>
-						<IconButton onClick={togglePopover}>
-							<MoreHorizOutlinedIcon />
-						</IconButton>
-						<PopoverActions
-							remove={deletePost}
-							edit={toggleEditForm}
-							id={popoverId}
-							open={open}
-							anchorEl={anchorEl}
-							close={handleClose}
+		/** Forward Post as Message Form **************/
+		const toggleMessageForm = () => {
+			setShowMessageForm((show) => !show);
+		};
+
+		const sendMessage = async (messageData, chatData) => {
+			// store messageId given back
+			const messageId = await createNewMessage(
+				'messages',
+				messageData,
+				'chats',
+				chatData
+			);
+
+			// push user to message
+			history.push(`/messages/${messageId}`);
+			dispatch(
+				addFlashMessage({
+					isOpen: true,
+					message: 'Message Sent!',
+					type: 'success',
+				})
+			);
+		};
+
+		// Form to forward post to another User as a message
+		if (showMessageForm) {
+			return (
+				<Modal
+					isOpen={showMessageForm}
+					content={
+						<NewMessageForm
+							send={sendMessage}
+							content={`Check out this post at ${HOST_URL}/post/${id}!`}
+							showAllUsers={true}
 						/>
-					</>
-				) : null}
+					}
+					closeModal={toggleMessageForm}
+				/>
+			);
+		}
+		/******************************************** */
+
+		// Copies link of post to browser clipboard
+		const shareLink = () => {
+			try {
+				copyLinkToClipBoard(`/post/${id}`);
+				/** Prompt change made */
+				dispatch(
+					addFlashMessage({
+						isOpen: true,
+						message: 'Copied to Clipboard!',
+						type: 'success',
+					})
+				);
+			} catch (err) {
+				/** Prompt change made */
+				dispatch(
+					addFlashMessage({
+						isOpen: true,
+						message: 'Error!',
+						type: 'danger',
+					})
+				);
+			}
+			// close share popover after copy to clipboard
+			handleShareClose();
+		};
+
+		return (
+			<div id={id} className="Post-Card">
+				<div className="Post-Card__Main">
+					<div className="Post-Card__Left">
+						<Link to={`/users/${userId}`}>
+							<Avatar alt={username} src={avatar} />
+						</Link>
+					</div>
+					<div className="Post-Card__Center">
+						<Link to={`/post/${id}`}>
+							<div className="Post-Card__Header">
+								<h5>{title}</h5>
+								<div className="Post-Card__Sub-Header">
+									<span className="mate-text-secondary username">
+										{username}
+									</span>
+									<span className="mate-text-secondary edited">
+										{last_updated && timestamp !== last_updated
+											? '(Edited)'
+											: ''}
+									</span>
+								</div>
+							</div>
+							<div className="Post-Card__Body mate-text-secondary">
+								<p className="description">{description}</p>
+								{showAttachment}
+								<span className="location">
+									<LocationOnIcon />
+									{location}
+								</span>
+								<span>{eventTime}</span>
+							</div>
+						</Link>
+					</div>
+				</div>
+				<div className="Post-Card__Footer">
+					<PostCardFooter
+						id={id}
+						comments={comments}
+						isBookmarked={isBookmarked}
+						toggleMessageForm={toggleMessageForm}
+						toggleSharePopover={toggleSharePopover}
+						shareId={popoverShareId}
+						open={openShare}
+						anchorEl={shareAnchorEl}
+						close={handleShareClose}
+						shareLink={shareLink}
+					/>
+				</div>
+				<div className="Post-Card__Right Post__timestamp">
+					<p>{timestamp}</p>
+					{currentUser.uid === userId ? (
+						<>
+							<IconButton onClick={togglePopover}>
+								<MoreHorizOutlinedIcon />
+							</IconButton>
+							<PopoverActions
+								remove={deletePost}
+								edit={toggleEditForm}
+								id={popoverId}
+								open={open}
+								anchorEl={anchorEl}
+								close={handleClose}
+							/>
+						</>
+					) : null}
+				</div>
 			</div>
-		</div>
-	);
-}
+		);
+	}
+);
 
 PostCard.propTypes = {
 	id: PropTypes.string.isRequired,
