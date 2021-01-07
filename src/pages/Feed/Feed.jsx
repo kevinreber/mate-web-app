@@ -45,7 +45,10 @@ function Feed() {
 		// get data from 'feed' collection
 		const getData = async () => {
 			await API.getFeed()
-				.then((data) => setPosts(data.feeds))
+				.then((data) => {
+					console.log(data);
+					setPosts(data.feeds);
+				})
 				.catch((err) => 'Error:' + console.log(err))
 				.finally(() =>
 					// Loading finished
@@ -156,10 +159,10 @@ function Feed() {
 			</div>
 			<div className="Feed__List">
 				{isLoading ? <Loader /> : null}
-				{posts.length === 0 && !isLoading ? (
-					<NoData text="posts" />
-				) : (
+				{posts !== [] && !isLoading ? (
 					<FeedList posts={posts} remove={deletePostPrompt} edit={editPost} />
+				) : (
+					<NoData text="posts" />
 				)}
 			</div>
 			<Fab id="Feed-Add-Post-Btn" aria-label="add">

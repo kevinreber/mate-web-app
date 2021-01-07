@@ -122,7 +122,7 @@ async function updateProfile(user, photo) {
 			axios(USER_PROFILE_URL, {
 				method: 'POST',
 				headers: {
-					Authorization: BEARER_AUTH_TOKEN,
+					Authorization: BEARER + BEARER_AUTH_TOKEN,
 					'Content-Type': 'application/json',
 				},
 				body: {
@@ -135,7 +135,7 @@ async function updateProfile(user, photo) {
 			axios(USER_PHOTO, {
 				method: 'POST',
 				headers: {
-					Authorization: BEARER_AUTH_TOKEN,
+					Authorization: BEARER + BEARER_AUTH_TOKEN,
 					'Content-Type': 'application/json',
 				},
 				body: {
@@ -183,7 +183,7 @@ export function googleLogin() {
 							body: JSON.stringify(data),
 						}).then((response) => response.json());
 
-						const accessToken = BEARER + auth.data.access_token;
+						const accessToken = auth.data.access_token;
 						const userData = auth.data.user;
 						/** Store Bearer token that will be used as an access token to fetch data from our API */
 						localStorage.setItem('bearerAuthToken', accessToken);
@@ -219,9 +219,11 @@ export function googleLogin() {
 								'Content-Type': 'application/json',
 							},
 							body: JSON.stringify(data),
-						}).then((response) => response.json());
+						})
+							.then((response) => response.json())
+							.catch((err) => console.error(err));
 
-						const accessToken = BEARER + auth.data.access_token;
+						const accessToken = auth.data.access_token;
 						const userData = auth.data.user;
 						/** Store Bearer token that will be used as an access token to fetch data from our API */
 						localStorage.setItem('bearerAuthToken', accessToken);
@@ -262,7 +264,7 @@ export function setCurrentUser(user) {
 }
 
 /** Formats action data to input to dispatch */
-function setCurrUser(user) {
+export function setCurrUser(user) {
 	return {
 		type: SET_CURRENT_USER,
 		user,
@@ -271,17 +273,18 @@ function setCurrUser(user) {
 
 export function logOut() {
 	return (dispatch) => {
-		auth
-			.signOut()
-			.then(() => {
-				console.log('Sign out successful');
-				dispatch(logOutUser(LOGOUT_USER));
-			})
-			.catch((err) => dispatch(dispatchError(LOGOUT_FAIL, err)));
+		// auth
+		// 	.signOut()
+		// .then(() => {
+		localStorage.removeItem('bearerAuthToken');
+		console.log('Sign out successful');
+		dispatch(logOutUser(LOGOUT_USER));
+		// })
+		// .catch((err) => dispatch(dispatchError(LOGOUT_FAIL, err)));
 	};
 }
 
-function logOutUser(user) {
+function logOutUser(user = null) {
 	return {
 		type: LOGOUT_USER,
 		user,

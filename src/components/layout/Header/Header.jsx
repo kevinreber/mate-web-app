@@ -37,15 +37,8 @@ const useStyles = makeStyles({
 	},
 });
 
-function Header() {
-	const dispatch = useDispatch();
-
-	const logOutUser = () => {
-		dispatch(logOut());
-	};
-
-	const currentUser = useSelector((state) => state.auth.user);
-
+function Header({ currentUser, logOutUser }) {
+	console.log(currentUser);
 	/** Initialize useStyles */
 	const classes = useStyles();
 	const [drawer, setDrawer] = useState(false);
@@ -73,9 +66,12 @@ function Header() {
 			<List>
 				<ListItem>
 					<ListItemIcon>
-						<Avatar alt={currentUser.displayName} src={currentUser.photoURL} />
+						<Avatar
+							alt={currentUser.display_name}
+							src={currentUser.photo_url}
+						/>
 					</ListItemIcon>
-					<ListItemText primary={currentUser.displayName} />
+					<ListItemText primary={currentUser.display_name} />
 				</ListItem>
 			</List>
 			<List>
@@ -88,7 +84,7 @@ function Header() {
 					</Link>
 				</ListItem>
 				<ListItem>
-					<Link to={`/users/${currentUser.uid}`}>
+					<Link to={`/users/${currentUser.id}`}>
 						<ListItemIcon>
 							<PersonIcon />
 						</ListItemIcon>
@@ -120,7 +116,10 @@ function Header() {
 			<AppBar position="static" className="Header-Content">
 				<Toolbar>
 					<IconButton onClick={toggleDrawer}>
-						<Avatar alt={currentUser.displayName} src={currentUser.photoURL} />
+						<Avatar
+							alt={currentUser.display_name}
+							src={currentUser.photo_url}
+						/>
 					</IconButton>
 					<Drawer anchor={'left'} open={drawer} onClose={toggleDrawer}>
 						{SideBar('left')}

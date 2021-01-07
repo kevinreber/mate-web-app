@@ -31,4 +31,5 @@ export const POST = 'POST';
 export const USERS = `${BASE_URL}/users`;
 export const FOLLOW_USER = `${BASE_URL}/follow`;
 export const UNFOLLOW_USER = `${BASE_URL}/unfollow`;
-export const BEARER_AUTH_TOKEN = localStorage.getItem('bearerAuthToken');
+export const BEARER_AUTH_TOKEN =
+	'BEARER ' + localStorage.getItem('bearerAuthToken');

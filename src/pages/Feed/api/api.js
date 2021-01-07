@@ -7,6 +7,7 @@ import {
 	POST,
 	FEED_URL,
 	FEED_TYPES,
+	BEARER,
 	BEARER_AUTH_TOKEN,
 } from '../constants/index';
 
@@ -16,7 +17,7 @@ export class API {
 			method: req,
 			url: endpoint,
 			headers: {
-				Authorization: BEARER_AUTH_TOKEN,
+				Authorization: BEARER + BEARER_AUTH_TOKEN,
 				'Content-Type': 'application/json',
 			},
 			[req === GET ? 'params' : 'data']: paramsOrData,

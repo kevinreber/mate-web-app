@@ -8,7 +8,7 @@ import { ReactComponent as CoursesIcon } from '../icons/courses-icon.svg';
 import Logo from '../../../images/logo/mate-logo.png';
 import StudyGroupIcon from '../icons/study-group-icon.png';
 import { ReactComponent as TutorIcon } from '../icons/tutor-icon.svg';
-import { logOut } from '../../../store/actions/auth';
+// import { logOut } from '../../../store/actions/auth';
 
 /** MUI */
 import { IconButton, Avatar } from '@material-ui/core';
@@ -20,13 +20,8 @@ import ExitToAppOutlinedIcon from '@material-ui/icons/ExitToAppOutlined';
 
 import './NavBar.css';
 
-function NavBar() {
-	const dispatch = useDispatch();
-	const currentUser = useSelector((state) => state.auth.user);
-
-	const logOutUser = () => {
-		dispatch(logOut());
-	};
+function NavBar({ currentUser, logOutUser }) {
+	console.log(currentUser);
 
 	return (
 		<nav className="NavBar fixed-bottom mate-bg-primary">

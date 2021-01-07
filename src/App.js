@@ -1,5 +1,5 @@
 /** Dependencies */
-import React, { useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import jwt_decode from 'jwt-decode';
 
@@ -9,45 +9,70 @@ import NavBar from './components/layout/NavBar/NavBar';
 import Notification from './components/Notification/Notification';
 import SubModal from './components/SubModal/SubModal';
 import Routes from './routes/Routes';
-import { setCurrentUser } from './store/actions/auth';
+import { setCurrUser, logOut } from './store/actions/auth';
 import { API } from '../src/pages/UserProfile/api/api';
 import './App.css';
 
+const AUTH_TOKEN = 'bearerAuthToken';
+
 function App() {
 	const dispatch = useDispatch();
-	const BEARER_AUTH_TOKEN = localStorage.getItem('bearerAuthToken');
+
+	const loggedInUser = useSelector((state) => state.auth.user);
+
+	const [checkLogIn, setCheckLogIn] = useState(true);
+	const [currentUser, setCurrentUser] = useState(null);
+	const initialToken = localStorage.getItem(AUTH_TOKEN) || null;
+	const [token, setToken] = useState(initialToken);
 
 	useEffect(() => {
 		async function getCurrentUser() {
-			const token = jwt_decode(BEARER_AUTH_TOKEN);
-			console.log(BEARER_AUTH_TOKEN, token);
-			const user = await API.getUserData(token.uuid);
-
+			console.log('checking...');
 			// check if user is logged in
-			if (user) {
-				dispatch(setCurrentUser(user.data));
+			if (token !== null) {
+				localStorage.setItem(AUTH_TOKEN, token);
+				const decoded = jwt_decode(token);
+				const user = await API.getUserData(decoded.uuid);
+
+				console.log(user);
+				setCurrentUser(user.data);
+				dispatch(setCurrUser(user.data));
 			} else {
 				console.log('no user');
+				localStorage.removeItem(AUTH_TOKEN);
+				setCurrentUser(null);
+				dispatch(setCurrUser(null));
 			}
 		}
-		getCurrentUser();
-	}, [dispatch, BEARER_AUTH_TOKEN]);
+		if (checkLogIn) {
+			getCurrentUser();
+			setCheckLogIn(false);
+		}
+	}, [dispatch, token, currentUser, checkLogIn]);
 
-	const currentUser = useSelector((state) => state.auth.user);
 	const modal = useSelector((state) => state.modal);
+
+	const logOutUser = () => {
+		setCurrentUser(null);
+		dispatch(logOut());
+	};
 
 	/** if no currentUser is logged in, hide the Header and NavBar */
 	return (
 		<div className="App">
-			{currentUser ? (
+			{!loggedInUser ? (
+				<Routes />
+			) : (
 				<>
-					<Header />
+					{loggedInUser && (
+						<Header currentUser={loggedInUser} logOutUser={logOutUser} />
+					)}
 					<Notification />
 					{modal.isOpen ? <SubModal /> : <Routes />}
-					<NavBar />
+					{loggedInUser && (
+						<NavBar currentUser={loggedInUser} logOutUser={logOutUser} />
+					)}
 				</>
-			) : (
-				<Routes />
 			)}
 		</div>
 	);
