@@ -1,19 +1,19 @@
 import { useState, useEffect } from 'react';
-
+const AUTH_TOKEN = 'bearerAuthToken';
 function useLocalStorageToken() {
-	const initialToken = localStorage.getItem('mate-user-token') || null;
+	const initialToken = localStorage.getItem(AUTH_TOKEN) || null;
 	const [token, setToken] = useState(initialToken);
 
-	useEffect(
+	useEffect(() => {
 		function setTokenLocalStorage() {
 			if (token === null) {
-				localStorage.removeItem('mate-user-token');
+				localStorage.removeItem(AUTH_TOKEN);
 			} else {
-				localStorage.setItem('mate-user-token', token);
+				localStorage.setItem(AUTH_TOKEN, token);
 			}
-		},
-		[token]
-	);
+		}
+		setTokenLocalStorage();
+	}, [token]);
 
 	return [token, setToken];
 }
