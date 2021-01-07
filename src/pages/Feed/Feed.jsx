@@ -1,5 +1,5 @@
 /** Dependencies */
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 /** Components & Helpers */
@@ -62,15 +62,18 @@ function Feed() {
 	const [showForm, setShowForm] = useState(false);
 	const toggleForm = () => setShowForm((show) => !show);
 
-	const setFlashMessage = (message, type) => {
-		dispatch(
-			addFlashMessage({
-				isOpen: true,
-				message: message,
-				type: type,
-			})
-		);
-	};
+	const setFlashMessage = useCallback(
+		(message, type) => {
+			dispatch(
+				addFlashMessage({
+					isOpen: true,
+					message: message,
+					type: type,
+				})
+			);
+		},
+		[dispatch]
+	);
 
 	const addPost = async (postData) => {
 		console.log(postData);
@@ -87,39 +90,48 @@ function Feed() {
 			});
 	};
 
-	/** Prompts Confirmation Dialog to Delete Post*/
-	const deletePostPrompt = (id, image) => {
-		setConfirmDialog({
-			isOpen: true,
-			title: CONFIRM.title,
-			subtitle: CONFIRM.subtitle,
-			onConfirm: () => {
-				deletePost(id, image);
-			},
-		});
-	};
-
 	/** Delete Post */
-	const deletePost = (id, image) => {
-		setConfirmDialog({
-			...confirmDialog,
-			isOpen: false,
-		});
-		dispatch(deletePostFromFB(id, currentUser.uid, image));
-		setFlashMessage(MESSAGE.deletePost, MESSAGE.error);
+	const deletePost = useCallback(
+		(id, image) => {
+			setConfirmDialog({
+				...confirmDialog,
+				isOpen: false,
+			});
+			dispatch(deletePostFromFB(id, currentUser.uid, image));
+			setFlashMessage(MESSAGE.deletePost, MESSAGE.error);
 
-		// get most recent posts
-		setIsLoading(true);
-	};
+			// get most recent posts
+			setIsLoading(true);
+		},
+		[setConfirmDialog, setFlashMessage, dispatch, confirmDialog, currentUser]
+	);
+
+	/** Prompts Confirmation Dialog to Delete Post*/
+	const deletePostPrompt = useCallback(
+		(id, image) => {
+			setConfirmDialog({
+				isOpen: true,
+				title: CONFIRM.title,
+				subtitle: CONFIRM.subtitle,
+				onConfirm: () => {
+					deletePost(id, image);
+				},
+			});
+		},
+		[deletePost]
+	);
 
 	/** Updates Post */
-	const editPost = (id, data) => {
-		dispatch(editPostInFB(id, data));
-		setFlashMessage(MESSAGE.updatePost, MESSAGE.success);
+	const editPost = useCallback(
+		(id, data) => {
+			dispatch(editPostInFB(id, data));
+			setFlashMessage(MESSAGE.updatePost, MESSAGE.success);
 
-		// get most recent posts
-		setIsLoading(true);
-	};
+			// get most recent posts
+			setIsLoading(true);
+		},
+		[dispatch, setFlashMessage]
+	);
 
 	if (showForm) {
 		return (
