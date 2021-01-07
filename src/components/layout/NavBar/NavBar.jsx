@@ -93,9 +93,12 @@ function NavBar() {
 					</IconButton>
 				</li>
 				<li className="nav-item p-0 nav-avatar">
-					<Link to={`/users/${currentUser.uid}`}>
-						<Avatar alt={currentUser.displayName} src={currentUser.photoURL} />
-						<h5 className="hide-lg">{currentUser.displayName}</h5>
+					<Link to={`/users/${currentUser.id}`}>
+						<Avatar
+							alt={currentUser.display_name}
+							src={currentUser.photo_url}
+						/>
+						<h5 className="hide-lg">{currentUser.display_name}</h5>
 					</Link>
 				</li>
 			</ul>
