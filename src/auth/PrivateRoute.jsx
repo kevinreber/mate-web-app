@@ -9,7 +9,7 @@ function PrivateRoute({ path, component }) {
 
 	/** if user isn't logged in, redirect to login page */
 	if (!currentUser) {
-		return <Redirect to='/login' />;
+		return <Redirect to="/login" />;
 	}
 
 	return <Route exact path={path} component={component} />;
