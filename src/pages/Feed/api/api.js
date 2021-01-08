@@ -17,7 +17,7 @@ export class API {
 			method: req,
 			url: endpoint,
 			headers: {
-				Authorization: BEARER + BEARER_AUTH_TOKEN,
+				Authorization: BEARER + localStorage.getItem(BEARER_AUTH_TOKEN),
 				'Content-Type': 'application/json',
 			},
 			[req === GET ? 'params' : 'data']: paramsOrData,

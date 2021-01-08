@@ -2,7 +2,7 @@
 import axios from 'axios';
 
 /** Constants */
-import { GET, FEED_URL, BEARER_AUTH_TOKEN } from '../constants/index';
+import { GET, FEED_URL, BEARER, BEARER_AUTH_TOKEN } from '../constants/index';
 
 export class API {
 	static async request(endpoint, req = GET, paramsOrData = {}) {
@@ -10,7 +10,7 @@ export class API {
 			method: req,
 			url: endpoint,
 			headers: {
-				Authorization: BEARER_AUTH_TOKEN,
+				Authorization: BEARER + localStorage.getItem(BEARER_AUTH_TOKEN),
 				'Content-Type': 'application/json',
 			},
 			[req === GET ? 'params' : 'data']: paramsOrData,

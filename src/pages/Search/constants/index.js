@@ -34,4 +34,5 @@ const BASE_URL = 'https://api.mateapp.us/api';
 export const GET = 'GET';
 export const FEED_URL = `${BASE_URL}/feeds`;
 export const FEED_TYPES = `${FEED_URL}/types`;
-export const BEARER_AUTH_TOKEN = localStorage.getItem('bearerAuthToken');
+export const BEARER = 'BEARER ';
+export const BEARER_AUTH_TOKEN = 'bearerAuthToken';

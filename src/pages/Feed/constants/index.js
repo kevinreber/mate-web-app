@@ -56,4 +56,4 @@ export const POST = 'POST';
 export const FEED_URL = `${BASE_URL}/feeds`;
 export const FEED_TYPES = `${FEED_URL}/types`;
 export const BEARER = 'BEARER ';
-export const BEARER_AUTH_TOKEN = localStorage.getItem('bearerAuthToken');
+export const BEARER_AUTH_TOKEN = 'bearerAuthToken';
