@@ -6,6 +6,8 @@ import {
 	GET,
 	POST,
 	USERS,
+	FOLLOWINGS,
+	FOLLOWERS,
 	FOLLOW_USER,
 	UNFOLLOW_USER,
 	UPDATE_PROFILE,
@@ -40,6 +42,14 @@ export class API {
 
 	static async getUserData(id) {
 		return this.request(`${USERS}/${id}`);
+	}
+
+	static async getFollowings() {
+		return this.request(FOLLOWINGS);
+	}
+
+	static async getFollowers() {
+		return this.request(FOLLOWERS);
 	}
 
 	static async followUser(userId) {
