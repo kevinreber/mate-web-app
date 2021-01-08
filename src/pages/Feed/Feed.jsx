@@ -49,7 +49,7 @@ function Feed() {
 					console.log(data);
 					setPosts(data.feeds);
 				})
-				.catch((err) => 'Error:' + console.log(err))
+				.catch((err) => 'Error:' + console.error(err.data.message))
 				.finally(() =>
 					// Loading finished
 					setIsLoading(false)
