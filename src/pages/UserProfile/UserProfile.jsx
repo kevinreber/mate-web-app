@@ -4,9 +4,9 @@ import { useParams, useHistory } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 
 /** Components & Helpers */
-import UserProfileHeader from './components/UserProfileHeader/UserProfileHeader';
-import UserProfileBody from './components/UserProfileBody/UserProfileBody';
-import UserEditProfileForm from './components/UserProfileHeader/UserProfileHeader';
+import UserProfileHeader from './components/Header/UserProfileHeader';
+import UserProfileBody from './components/Body/UserProfileBody';
+import UserEditProfileForm from './components/Header/UserProfileHeader';
 import ConfirmDialog from '../../components/ConfirmDialog/ConfirmDialog';
 import CTAButton from '../../components/CTAButton/CTAButton';
 import BackButton from '../../components/BackButton/BackButton';

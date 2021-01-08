@@ -3,7 +3,7 @@ import React from 'react';
 import { PropTypes } from 'prop-types';
 
 /** Components & Helpers*/
-import UserFields from '../UserFields/UserFields';
+import UserFields from '../Fields/UserFields';
 
 /** Body for User Profile.
  * UserProfile -> UserProfileBody => UserFields
