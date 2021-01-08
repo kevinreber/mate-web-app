@@ -13,32 +13,35 @@ import PostCard from '../PostCard/PostCard';
  * @param {function} 	edit	Function to edit post. User will only see if they made post.
  */
 function FeedList({ posts, remove, edit }) {
-	const List = posts.map((post) => (
-		<PostCard
-			id={post.id}
-			key={post.id}
-			title={post.title}
-			type={post.type}
-			username={post.user.name}
-			userId={post.user.id}
-			avatar={post.user.photo_url}
-			description={post.description}
-			location={post.location}
-			start={post.start}
-			end={post.end}
-			// attachment_preview={post.media[0]['url']}
-			attachment={post.media[0] || post.media}
-			// attachment_name={post.data.attachment_name}
-			timestamp={post.created}
-			// last_updated={post.data.last_updated}
-			// comments={post.data.num_of_comments}
-			// isBookmarked={false}
-			remove={remove}
-			edit={edit}
-		/>
-	));
-
-	return <>{List}</>;
+	return (
+		<>
+			{posts &&
+				posts.map((post) => (
+					<PostCard
+						id={post.id}
+						key={post.id}
+						title={post.title}
+						type={post.type}
+						username={post.user.name}
+						userId={post.user.id}
+						avatar={post.user.photo_url}
+						description={post.description}
+						location={post.location}
+						start={post.start}
+						end={post.end}
+						// attachment_preview={post.media[0]['url']}
+						attachment={post.media[0] || post.media}
+						// attachment_name={post.data.attachment_name}
+						timestamp={post.created}
+						// last_updated={post.data.last_updated}
+						// comments={post.data.num_of_comments}
+						// isBookmarked={false}
+						remove={remove}
+						edit={edit}
+					/>
+				))}
+		</>
+	);
 }
 
 FeedList.propTypes = {
@@ -49,6 +52,7 @@ FeedList.propTypes = {
 
 export default FeedList;
 
+//  * MOCK DATA SCHEMA
 // created: "4 weeks ago"
 // description: "hfhggh"
 // end: null
