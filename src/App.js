@@ -42,6 +42,7 @@ function App() {
 				localStorage.removeItem(AUTH_TOKEN);
 				setCurrentUser(null);
 				dispatch(setCurrUser(null));
+				setToken(null);
 			}
 		}
 		if (checkLogIn) {
@@ -53,6 +54,7 @@ function App() {
 	const modal = useSelector((state) => state.modal);
 
 	const logOutUser = () => {
+		setToken(null);
 		setCurrentUser(null);
 		dispatch(logOut());
 	};
