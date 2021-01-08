@@ -31,5 +31,12 @@ export const POST = 'POST';
 export const USERS = `${BASE_URL}/users`;
 export const FOLLOW_USER = `${BASE_URL}/follow`;
 export const UNFOLLOW_USER = `${BASE_URL}/unfollow`;
+
+export const UPDATE_PROFILE = `${BASE_URL}/me`;
+export const UPDATE_PHOTO = `${UPDATE_PROFILE}/photo`;
+export const UPDATE_ABOUT = `${UPDATE_PROFILE}/about`;
+export const UPDATE_SOCIETIES = `${UPDATE_PROFILE}/societies`;
+export const UPDATE_ACHIEVEMENTS = `${UPDATE_PROFILE}/achievements`;
+
 export const BEARER = 'BEARER ';
 export const BEARER_AUTH_TOKEN = 'bearerAuthToken';
