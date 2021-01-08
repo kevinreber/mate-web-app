@@ -23,7 +23,7 @@
 
 ### Search
 
-- [] Setup Quick Search
+- [x] Setup Quick Search
 - [] Setup 'Today' Search
 
 ### Study Groups
@@ -50,7 +50,7 @@
 
 ### Questions
 
-- [] How are messages set up to work?
+- [] How are messages/study group messages set up to work?
 - [] Prompt user if they created a new account?
 
 ## Available Scripts
