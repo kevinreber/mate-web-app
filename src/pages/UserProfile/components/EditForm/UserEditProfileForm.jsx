@@ -13,7 +13,12 @@ import SubmitButton from '../../../../components/SubmitButton/SubmitButton';
  * @param	{function}	save				Saves changes made to User's Profile.
  * @param	{function}	deleteAccount		Deletes User's account.
  */
-function UserEditProfileForm({ bio, organizations, save, deleteAccount }) {
+export function UserEditProfileForm({
+	bio,
+	organizations,
+	save,
+	deleteAccount,
+}) {
 	const INITIAL_STATE = { bio: bio };
 
 	const [formData, setFormData] = useState(INITIAL_STATE);
@@ -82,5 +87,3 @@ UserEditProfileForm.propTypes = {
 	save: PropTypes.func,
 	deleteAccount: PropTypes.func,
 };
-
-export default UserEditProfileForm;

@@ -3,7 +3,7 @@ import React from 'react';
 import { useSelector } from 'react-redux';
 
 /** Header for User Profile */
-function UserProfileHeader({
+export function UserProfileHeader({
 	id,
 	displayName = '',
 	name = '',
@@ -68,5 +68,3 @@ function UserProfileHeader({
 		</>
 	);
 }
-
-export default UserProfileHeader;

@@ -3,7 +3,7 @@ import React from 'react';
 import { PropTypes } from 'prop-types';
 
 /** Components & Helpers*/
-import UserFields from '../Fields/UserFields';
+import { UserFields } from '../Fields';
 
 /** Body for User Profile.
  * UserProfile -> UserProfileBody => UserFields
@@ -19,7 +19,7 @@ import UserFields from '../Fields/UserFields';
  * @param 	{array}		portfolio			Array of strings of user's portfolio links.
  * @param 	{array}		availability		Array of object of user's availability.
  */
-function UserProfileBody({
+export function UserProfileBody({
 	posts,
 	bio,
 	organizations,
@@ -73,5 +73,3 @@ UserProfileBody.propTypes = {
 	portfolio: PropTypes.array,
 	availability: PropTypes.array,
 };
-
-export default UserProfileBody;

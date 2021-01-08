@@ -18,7 +18,12 @@ import Chip from '@material-ui/core/Chip';
  * @param {boolean} chips		Displays content as chips or text.
  * @param {string}	field		Field name.
  */
-function UserFields({ label, content = '-', chips = false, field = '' }) {
+export function UserFields({
+	label,
+	content = '-',
+	chips = false,
+	field = '',
+}) {
 	const formatArray = (arr) => arr.join(', ');
 
 	// format handler for availability
@@ -111,5 +116,3 @@ UserFields.propTypes = {
 	chips: PropTypes.bool,
 	field: PropTypes.string,
 };
-
-export default UserFields;
