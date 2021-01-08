@@ -8,6 +8,7 @@ import {
 	USERS,
 	FOLLOW_USER,
 	UNFOLLOW_USER,
+	BEARER,
 	BEARER_AUTH_TOKEN,
 } from '../constants/index';
 
@@ -17,7 +18,7 @@ export class API {
 			method: req,
 			url: endpoint,
 			headers: {
-				Authorization: BEARER_AUTH_TOKEN,
+				Authorization: BEARER + localStorage.getItem(BEARER_AUTH_TOKEN),
 				'Content-Type': 'application/json',
 			},
 			[req === GET ? 'params' : 'data']: paramsOrData,
