@@ -3,7 +3,7 @@ import React, { useState, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 
 /** Components & Helpers */
-import FeedList from '../Feed/components/FeedList/FeedList';
+import FeedList from '../Feed/components/List/FeedList';
 import NoData from '../../components/NoData/NoData';
 import CTAButton from '../../components/CTAButton/CTAButton';
 import Searchbar from '../../components/SearchBar/Searchbar';
@@ -23,9 +23,10 @@ function Search() {
 	const dispatch = useDispatch();
 	const [quickSearch, setQuickSearch] = useState('Today');
 	const toggleQuickSearch = (e) => {
-		// setIsLoading(true);
+		setSearch('');
 		setFilteredPosts([]);
 		setQuickSearch(e.target.innerText);
+		setIsLoading(true);
 	};
 
 	const [search, setSearch] = useState('');
@@ -81,16 +82,24 @@ function Search() {
 			// 		})
 			// 		.catch((err) => console.log(err));
 			// }
-
-			await API.getFeed()
-				.then((data) => setAllPosts(data.feeds))
-				.catch((err) => console.error(err))
-				.finally(() => setIsLoading(false));
+			if (quickSearch === 'Today') {
+				await API.getFeed()
+					.then((data) => setAllPosts(data.feeds))
+					.catch((err) => console.error(err))
+					.finally(() => setIsLoading(false));
+			} else {
+				// filters posts by quick search
+				const filter = allPosts.filter(
+					(post) => post.type.toLowerCase() === quickSearch.toLowerCase()
+				);
+				setFilteredPosts(filter);
+				setIsLoading(false);
+			}
 		}
 		if (isLoading && !startSearch) {
 			getData();
 		}
-	}, [quickSearch, isLoading, startSearch]);
+	}, [quickSearch, isLoading, startSearch, allPosts]);
 
 	useEffect(() => {
 		// if user uses search bar, filter out posts that match search keywords
@@ -119,7 +128,7 @@ function Search() {
 		if (startSearch) {
 			searchForPosts();
 		}
-	}, [isLoading, startSearch, search]);
+	}, [startSearch, search, allPosts]);
 
 	const setFlashMessage = (message, type = 'success') => {
 		dispatch(
