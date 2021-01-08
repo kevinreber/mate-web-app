@@ -6,7 +6,7 @@ import { PropTypes } from 'prop-types';
 import moment from 'moment';
 
 /** Components & Helpers */
-import EditPostForm from '../EditPostForm/EditPostForm';
+import EditPostForm from '../EditForm/EditPostForm';
 import PopoverActions from '../../../../components/PopoverActions/PopoverActions';
 import NewMessageForm from '../../../Notifications/components/NewMessageForm/NewMessageForm';
 import Modal from '../../../../components/Modal/Modal';
