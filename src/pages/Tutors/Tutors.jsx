@@ -8,7 +8,7 @@ import BeTutorForm from './components/BeTutorForm/BeTutorForm';
 import db from '../../config/fbConfig';
 import './Tutors.css';
 
-function Tutor() {
+export function Tutors() {
 	const currentUser = useSelector((state) => state.auth.user);
 
 	const [isLoadingTutors, setIsLoadingTutors] = useState(true);
@@ -132,5 +132,3 @@ function Tutor() {
 		</div>
 	);
 }
-
-export default Tutor;

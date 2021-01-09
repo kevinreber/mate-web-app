@@ -16,7 +16,7 @@ import './CommunityInfo.css';
 /** Displays Course Information such as assignments and discussion boards
  * Organizations -> CommunityList -> CommunityCard -> CommunityInfo
  */
-function CommunityInfo() {
+export function CommunityInfo() {
 	const { communityId } = useParams();
 	const history = useHistory();
 	const dispatch = useDispatch();
@@ -69,5 +69,3 @@ function CommunityInfo() {
 
 	return <>{courseInfo}</>;
 }
-
-export default CommunityInfo;

@@ -26,7 +26,7 @@ import Avatar from '@material-ui/core/Avatar';
 /** Displays Chat History of Message
  * Messages
  */
-function MessageChat() {
+export function Messages() {
 	const history = useHistory();
 	const dispatch = useDispatch();
 	const { messageId } = useParams();
@@ -232,5 +232,3 @@ function MessageChat() {
 		</div>
 	);
 }
-
-export default MessageChat;

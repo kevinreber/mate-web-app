@@ -11,7 +11,7 @@ import Logo from '../../images/logo/mate-logo.png';
 import { googleLogin } from '../../store/actions/auth';
 
 /** User Login Form */
-function Login() {
+export function Login() {
 	const dispatch = useDispatch();
 
 	/** Use history to redirect after user logs in/signs up */
@@ -89,5 +89,3 @@ function Login() {
 		</div>
 	);
 }
-
-export default Login;

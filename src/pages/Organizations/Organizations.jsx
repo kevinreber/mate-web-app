@@ -29,7 +29,7 @@ import {
 /** Displays a CourseList of user's Current and Past Semester courses. 
     Courses will fetch which courses to display from API and pass courses into CourseList.
 */
-function Courses() {
+export function Organizations() {
 	const dispatch = useDispatch();
 	const currentUser = useSelector((state) => state.auth.user);
 
@@ -208,5 +208,3 @@ function Courses() {
 		</div>
 	);
 }
-
-export default Courses;
