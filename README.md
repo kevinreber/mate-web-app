@@ -8,7 +8,8 @@
 
 ### Profile
 
-- [] Set up API calls
+- [x] Set up API calls
+- [] ? How to see other users followings/followers
 
 ### Feed
 
