@@ -241,8 +241,14 @@ export function UserProfile() {
 				isOpen={editProfile}
 				content={
 					<UserEditProfileForm
-						bio={user.bio}
-						organizations={user.organizations}
+						image={user.photo_url}
+						displayName={user.display_name}
+						firstName={user.first_name}
+						lastName={user.last_name}
+						phoneNumber={user.phone_number}
+						about={user.about}
+						achievements={user.achievements}
+						societies={user.societies}
 						save={saveEdits}
 						deleteAccount={deleteAccountPrompt}
 					/>
