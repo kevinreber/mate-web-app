@@ -8,6 +8,7 @@
 
 ### Profile
 
+- [] BUG: when visiting a user's profile, then navigating to current user's profile, local state does not update
 - [x] Set up API calls
 - [] ? How to see other users followings/followers
 
