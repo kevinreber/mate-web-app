@@ -52,6 +52,17 @@ export class API {
 		return this.request(FOLLOWERS);
 	}
 
+	static async getAllUserData(id) {
+		const user = await this.getUserData(id);
+		const followings = await this.getFollowings();
+		const followers = await this.getFollowers();
+		return {
+			user: user.data,
+			followings: followings.data,
+			followers: followers.data,
+		};
+	}
+
 	static async followUser(userId) {
 		const data = {
 			following_id: userId,

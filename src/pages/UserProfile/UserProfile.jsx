@@ -33,6 +33,8 @@ function UserProfile() {
 	const [userPosts, setUserPosts] = useState(null);
 
 	const [user, setUser] = useState({});
+	const [followers, setFollowers] = useState([]);
+	const [followings, setFollowings] = useState([]);
 	const [isLoading, setIsLoading] = useState(true);
 	const [confirmDialog, setConfirmDialog] = useState({
 		isOpen: false,
@@ -99,8 +101,12 @@ function UserProfile() {
 			// 			);
 			// 		})
 			// 		.catch((err) => console.log(err));
-			await API.getUserData(userId)
-				.then((data) => setUser(data.data))
+			await API.getAllUserData(userId)
+				.then((data) => {
+					setUser(data.user);
+					setFollowings(data.followings);
+					setFollowers(data.followers);
+				})
 				.catch((err) => 'Error:' + console.log(err))
 				.finally(() =>
 					// Loading finished
