@@ -104,8 +104,8 @@ function UserProfile() {
 			await API.getAllUserData(userId)
 				.then((data) => {
 					setUser(data.user);
-					setFollowings(data.followings);
-					setFollowers(data.followers);
+					// setFollowings(data.followings);
+					// setFollowers(data.followers);
 				})
 				.catch((err) => 'Error:' + console.log(err))
 				.finally(() =>
@@ -113,10 +113,10 @@ function UserProfile() {
 					setIsLoading(false)
 				);
 		}
-		if (userId) {
+		if (userId && isLoading) {
 			getData();
 		}
-	}, [userId, dispatch, history]);
+	}, [userId, dispatch, history, isLoading]);
 	const toggleEditProfile = () => setEditProfile((edit) => !edit);
 
 	const setFlashMessage = (message, type) => {
@@ -193,6 +193,7 @@ function UserProfile() {
 					? MESSAGE.error
 					: MESSAGE.success;
 				setFlashMessage(resp.message, status);
+				setUser(resp.data.user);
 			})
 			.catch((err) => {
 				console.error('Error: ', err);
@@ -203,6 +204,7 @@ function UserProfile() {
 		return API.unFollowUser(id)
 			.then((resp) => {
 				setFlashMessage(resp.message, MESSAGE.success);
+				setUser(resp.data.user);
 			})
 			.catch((err) => {
 				console.error('Error: ', err);
@@ -272,6 +274,9 @@ function UserProfile() {
 							avatar={user.photo_url}
 							background={user.backgroundImage}
 							isTutor={user.isTutor}
+							followings={user.total_followings}
+							followers={user.total_followers}
+							isFollowing={user.is_following}
 							followUser={followUser}
 							unFollowUser={unFollowUser}
 						/>

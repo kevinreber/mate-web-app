@@ -12,6 +12,9 @@ export function UserProfileHeader({
 	// avatar = 'https://academist-app-production.s3.amazonaws.com/uploads/user/profile_image/11332/default_user_icon.png',
 	// background = 'https://www.berkeleyside.com/wp-content/uploads/2020/04/1920px-UCBerkeleyCampus-720x468.jpg',
 	isTutor = false,
+	followings,
+	followers,
+	isFollowing,
 	followUser,
 	unFollowUser,
 }) {
@@ -29,6 +32,11 @@ export function UserProfileHeader({
 	 * */
 	const bookmarkStatus = id ? 'fas fa-bookmark mr-3' : 'far fa-bookmark mr-3';
 	const followStatus = id ? 'fas fa-user-plus mr-2' : 'fas fa-user-minus mr-2';
+	const FollowButton = isFollowing ? (
+		<button onClick={() => unFollowUser(id)}>Unfollow</button>
+	) : (
+		<button onClick={() => followUser(id)}>Follow</button>
+	);
 
 	return (
 		<>
@@ -56,13 +64,15 @@ export function UserProfileHeader({
 							<i className="fas fa-share-alt"></i>
 						</div>
 					</div>
-					{currentUser.uid !== id ? (
-						<div>
-							{/* TEMPORARY BUTTONS FOR TESTING API */}
-							<button onClick={() => followUser(id)}>Follow</button>
-							<button onClick={() => unFollowUser(id)}>Unfollow</button>
-						</div>
-					) : null}
+					<p>
+						Followings:
+						{followings}
+					</p>
+					<p>
+						Followers:
+						{followers}
+					</p>
+					{currentUser.id !== id && <div>{FollowButton}</div>}
 				</div>
 			</div>
 		</>
