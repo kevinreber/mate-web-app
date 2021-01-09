@@ -26,7 +26,7 @@ import CancelIcon from '@material-ui/icons/Cancel';
 /** Form for user's to create a Post
  *  Feed -> FeedList -> PostCard -> EditPostForm
  */
-function EditPostForm({
+export function EditPostForm({
 	save,
 	userId,
 	username,
@@ -438,5 +438,3 @@ function EditPostForm({
 		</div>
 	);
 }
-
-export default EditPostForm;

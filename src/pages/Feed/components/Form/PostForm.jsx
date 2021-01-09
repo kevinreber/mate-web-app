@@ -23,7 +23,7 @@ import CancelIcon from '@material-ui/icons/Cancel';
 /** Form for user's to create a Post
  *  Feed -> PostForm
  */
-function PostForm({ save }) {
+export function PostForm({ save }) {
 	/** Get user data */
 	const user = useSelector((state) => {
 		return {
@@ -393,7 +393,7 @@ function PostForm({ save }) {
 				<div className="PostForm__Footer">
 					<div className="message__attachments">
 						<div className="preview__attachment">
-							{image.attachment_preview ? (
+							{image.attachment_preview && (
 								<>
 									<img
 										src={image.attachment_preview}
@@ -404,8 +404,6 @@ function PostForm({ save }) {
 										<CancelIcon className="remove__attachment" />
 									</IconButton>
 								</>
-							) : (
-								''
 							)}
 							<ProgressBar progress={progressBar} />
 						</div>
@@ -422,16 +420,12 @@ function PostForm({ save }) {
 				</div>
 				<SubmitButton text="Post" reset={true} resetForm={resetFormData} />
 			</form>
-			{errors ? (
+			{errors && (
 				<div className="Form__Errors">
 					<div className="alert errors">{errors}</div>
 				</div>
-			) : (
-				''
 			)}
 			<div className="Post-Form-Padding"></div>
 		</div>
 	);
 }
-
-export default PostForm;

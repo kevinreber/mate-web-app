@@ -6,12 +6,13 @@ import { PropTypes } from 'prop-types';
 import moment from 'moment';
 
 /** Components & Helpers */
-import EditPostForm from '../EditForm/EditPostForm';
+import { EditPostForm } from '../EditForm';
 import PopoverActions from '../../../../components/PopoverActions/PopoverActions';
 import NewMessageForm from '../../../Notifications/components/NewMessageForm/NewMessageForm';
 import Modal from '../../../../components/Modal/Modal';
 import { addFlashMessage } from '../../../../store/actions/flashMessages';
 import { showModalContent } from '../../../../store/actions/modal';
+import { PostCardFooter } from '../CardFooter/PostCardFooter';
 import createNewMessage from '../../../../utils/createNewMessage';
 import copyLinkToClipBoard from '../../../../utils/copyLinkToClipBoard';
 
@@ -20,7 +21,6 @@ import IconButton from '@material-ui/core/IconButton';
 import LocationOnIcon from '@material-ui/icons/LocationOn';
 import MoreHorizOutlinedIcon from '@material-ui/icons/MoreHorizOutlined';
 import Avatar from '@material-ui/core/Avatar';
-import PostCardFooter from '../CardFooter/PostCardFooter';
 
 /** ! TEMP URL */
 const HOST_URL = 'localhost:3000';

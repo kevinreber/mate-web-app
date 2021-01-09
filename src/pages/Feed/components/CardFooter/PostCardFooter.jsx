@@ -30,7 +30,7 @@ import SendIcon from '@material-ui/icons/Send';
  * @param {function}	close
  * @param {function}	shareLink
  */
-function PostCardFooter({
+export function PostCardFooter({
 	id,
 	comments = null,
 	isBookmarked = false,
@@ -91,5 +91,3 @@ PostCardFooter.propTypes = {
 	close: PropTypes.func,
 	shareLink: PropTypes.func,
 };
-
-export default PostCardFooter;

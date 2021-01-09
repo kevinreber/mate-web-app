@@ -3,8 +3,8 @@ import React, { useState, useEffect, useCallback } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 /** Components & Helpers */
-import FeedList from './components/List/FeedList';
-import PostForm from './components/Form/PostForm';
+import { FeedList } from './components/List';
+import { PostForm } from './components/Form/PostForm';
 import NoData from '../../components/NoData/NoData';
 import Modal from '../../components/Modal/Modal';
 import Loader from '../../components/layout/Loader/Loader';

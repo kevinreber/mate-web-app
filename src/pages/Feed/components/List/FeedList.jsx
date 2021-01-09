@@ -12,7 +12,7 @@ import PostCard from '../Card/PostCard';
  * @param {function} 	remove	Function to remove post. User will only see if they made post.
  * @param {function} 	edit	Function to edit post. User will only see if they made post.
  */
-function FeedList({ posts, remove, edit }) {
+export function FeedList({ posts, remove, edit }) {
 	return (
 		<>
 			{posts &&
@@ -49,8 +49,6 @@ FeedList.propTypes = {
 	remove: PropTypes.func,
 	edit: PropTypes.func,
 };
-
-export default FeedList;
 
 //  * MOCK DATA SCHEMA
 // created: "4 weeks ago"
