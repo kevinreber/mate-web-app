@@ -101,6 +101,7 @@ export function UserEditProfileForm({
 						type="text"
 						maxLength="25"
 						onChange={handleChange}
+						required
 					/>
 					<label className="float-left" htmlFor="phoneNumber">
 						Phone
@@ -126,6 +127,7 @@ export function UserEditProfileForm({
 						type="text"
 						maxLength="25"
 						onChange={handleChange}
+						required
 					/>
 					<label className="float-left" htmlFor="lastName">
 						Last Name
@@ -138,6 +140,7 @@ export function UserEditProfileForm({
 						type="text"
 						maxLength="25"
 						onChange={handleChange}
+						required
 					/>
 				</div>
 				<div className="form-group">
